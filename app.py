@@ -5,6 +5,7 @@ import calendar
 from datetime import datetime
 import base64
 
+
 # Function to load data from Excel into a DataFrame with @st.cache_data
 @st.cache_data(hash_funcs={pd.DataFrame: lambda _: None})
 def load_data(file):
