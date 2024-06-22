@@ -58,6 +58,46 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
     conn.close()
     st.success('Slot booked successfully!')
 
+# Function to update another database from uploaded Excel file
+def update_another_database(file):
+    # Load the Excel data
+    df = pd.read_excel(file)
+
+    # Assuming database connection and table creation (adjust as per your database)
+    conn = sqlite3.connect('another_database.db')  # Change database name if needed
+    c = conn.cursor()
+
+    # Create table if not exists (adjust schema as per your requirements)
+    c.execute('''CREATE TABLE IF NOT EXISTS student_data
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                 cmis_id TEXT,
+                 student_name TEXT,
+                 cmis_ph_no TEXT,
+                 center_name TEXT,
+                 uploader_name TEXT)''')
+    conn.commit()
+
+    # Insert data into the database
+    for index, row in df.iterrows():
+        c.execute('''INSERT INTO student_data (cmis_id, student_name, cmis_ph_no, center_name, uploader_name)
+                     VALUES (?, ?, ?, ?, ?)''', (row['CMIS ID'], row['Student Name'], row['CMIS PH No(10 Number)'],
+                                                row['Center Name'], row['Name Of Uploder']))
+    conn.commit()
+    conn.close()
+
+    st.success('Data updated successfully!')
+
+# Function to download data from another_database.db
+def download_another_database_data():
+    conn = sqlite3.connect('another_database.db')
+    df = pd.read_sql_query("SELECT * FROM student_data", conn)
+    conn.close()
+    
+    csv = df.to_csv(index=False)
+    b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding
+    href = f'<a href="data:file/csv;base64,{b64}" download="student_data.csv">Download CSV</a>'
+    st.markdown(href, unsafe_allow_html=True)
+
 # Function to generate HTML for calendar view with bookings highlighted
 def generate_calendar(bookings):
     cal = calendar.Calendar()
@@ -145,6 +185,16 @@ def main():
     # Book button
     if st.button('Book Slot'):
         insert_booking(str(selected_date), selected_time_range, selected_manager, selected_spoc, booked_by)
+
+    # Upload Excel file and update another database
+    st.subheader('Upload Excel for another database update')
+    file = st.file_uploader('Upload Excel', type=['xlsx', 'xls'])
+    if file is not None:
+        if st.button('Update Another Database'):
+            update_another_database(file)
+        # Download data button
+    if st.button('Download Data from Another Database'):
+        download_another_database_data()
 
     # Fetch all bookings
     conn = sqlite3.connect('slot_booking_new.db')  # Change database name if needed
