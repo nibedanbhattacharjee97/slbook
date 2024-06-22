@@ -5,19 +5,16 @@ import calendar
 from datetime import datetime
 import base64
 
-
 # Function to load data from Excel into a DataFrame with @st.cache_data
 @st.cache_data(hash_funcs={pd.DataFrame: lambda _: None})
 def load_data(file):
     df = pd.read_excel(file)
-    # Assuming 'Manager Name' and 'SPOC Name' are the actual column names
     df.rename(columns={'Actual_Manager_Column_Name': 'Manager Name', 'Actual_SPOC_Column_Name': 'SPOC Name'}, inplace=True)
-    # Perform any additional data processing within this function
     return df
 
 # Function to create SQLite database table for appointments
 def create_table():
-    conn = sqlite3.connect('slot_booking_new.db')  # Change database name if needed
+    conn = sqlite3.connect('slot_booking_new.db')
     c = conn.cursor()
     c.execute('''CREATE TABLE IF NOT EXISTS appointment_bookings
                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,7 +28,6 @@ def create_table():
 
 # Function to insert booking into SQLite database
 def insert_booking(date, time_range, manager, spoc, booked_by):
-    # Check if the selected date is in the past
     selected_date = datetime.strptime(date, '%Y-%m-%d')
     current_date = datetime.now()
 
@@ -39,10 +35,9 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
         st.error('Slot booking failed. You cannot book slots for past dates.')
         return
 
-    conn = sqlite3.connect('slot_booking_new.db')  # Change database name if needed
+    conn = sqlite3.connect('slot_booking_new.db')
     c = conn.cursor()
 
-    # Check if there is already a booking for this SPOC on this date
     c.execute('''SELECT * FROM appointment_bookings 
                  WHERE date = ? AND spoc = ?''', (date, spoc))
     existing_booking = c.fetchone()
@@ -52,7 +47,6 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
         st.error('Slot booking failed. This SPOC is already booked for the selected date.')
         return
 
-    # Insert the new booking
     c.execute('''INSERT INTO appointment_bookings (date, time_range, manager, spoc, booked_by)
                  VALUES (?, ?, ?, ?, ?)''', (date, time_range, manager, spoc, booked_by))
     conn.commit()
@@ -61,14 +55,10 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
 
 # Function to update another database from uploaded Excel file
 def update_another_database(file):
-    # Load the Excel data
     df = pd.read_excel(file)
 
-    # Assuming database connection and table creation (adjust as per your database)
-    conn = sqlite3.connect('another_database.db')  # Change database name if needed
+    conn = sqlite3.connect('another_database.db')
     c = conn.cursor()
-
-    # Create table if not exists (adjust schema as per your requirements)
     c.execute('''CREATE TABLE IF NOT EXISTS student_data
                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
                  cmis_id TEXT,
@@ -78,7 +68,6 @@ def update_another_database(file):
                  uploader_name TEXT)''')
     conn.commit()
 
-    # Insert data into the database
     for index, row in df.iterrows():
         c.execute('''INSERT INTO student_data (cmis_id, student_name, cmis_ph_no, center_name, uploader_name)
                      VALUES (?, ?, ?, ?, ?)''', (row['CMIS ID'], row['Student Name'], row['CMIS PH No(10 Number)'],
@@ -95,7 +84,7 @@ def download_another_database_data():
     conn.close()
     
     csv = df.to_csv(index=False)
-    b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding
+    b64 = base64.b64encode(csv.encode()).decode()
     href = f'<a href="data:file/csv;base64,{b64}" download="student_data.csv">Download CSV</a>'
     st.markdown(href, unsafe_allow_html=True)
 
@@ -104,9 +93,7 @@ def generate_calendar(bookings):
     cal = calendar.Calendar()
     current_year = datetime.now().year
     current_month = datetime.now().month
-
-    # Get the weekday names
-    weekday_names = list(calendar.day_abbr)  # Using abbreviated day names (Mon, Tue, Wed, etc.)
+    weekday_names = list(calendar.day_abbr)
 
     days_html = ''
     for day in cal.itermonthdays(current_year, current_month):
@@ -155,6 +142,18 @@ def generate_calendar(bookings):
 
     return calendar_html
 
+# Function to bulk delete data from student_data table in another_database.db by cmis_id
+def bulk_delete_student_data(cmis_ids):
+    conn = sqlite3.connect('another_database.db')
+    c = conn.cursor()
+    
+    for cmis_id in cmis_ids:
+        c.execute("DELETE FROM student_data WHERE cmis_id = ?", (cmis_id,))
+    
+    conn.commit()
+    conn.close()
+    st.success("Selected records deleted successfully.")
+
 # Main function for the Streamlit app
 def main():
     st.title('Slot Booking Platform')
@@ -193,16 +192,16 @@ def main():
     if file is not None:
         if st.button('Update Another Database'):
             update_another_database(file)
-        # Download data button
+
+    # Download data button
     if st.button('Download Data from Another Database'):
         download_another_database_data()
 
     # Fetch all bookings
-    conn = sqlite3.connect('slot_booking_new.db')  # Change database name if needed
+    conn = sqlite3.connect('slot_booking_new.db')
     bookings = pd.read_sql_query("SELECT * FROM appointment_bookings", conn)
     conn.close()
 
-    # Convert 'date' column to datetime if it's stored as text
     if 'date' in bookings.columns:
         bookings['date'] = pd.to_datetime(bookings['date'])
 
@@ -214,7 +213,7 @@ def main():
     st.header("Today's Bookings")
 
     current_date = datetime.now().strftime("%Y-%m-%d")
-    conn = sqlite3.connect('slot_booking_new.db')  # Change database name if needed
+    conn = sqlite3.connect('slot_booking_new.db')
     c = conn.cursor()
     c.execute(
         "SELECT date, time_range, manager, spoc FROM appointment_bookings WHERE date = ?",
@@ -233,9 +232,18 @@ def main():
     # Download button for monthly data
     if st.button('Download Monthly Data'):
         csv = bookings.to_csv(index=False)
-        b64 = base64.b64encode(csv.encode()).decode()  # B64 encoding
+        b64 = base64.b64encode(csv.encode()).decode()
         href = f'<a href="data:file/csv;base64,{b64}" download="monthly_bookings.csv">Download CSV</a>'
         st.markdown(href, unsafe_allow_html=True)
+
+    # Bulk delete student data
+    st.header('Bulk Delete Student Data')
+    file = st.file_uploader('Upload CSV with CMIS IDs to delete', type=['csv'])
+    if file is not None:
+        cmis_ids_df = pd.read_csv(file)
+        cmis_ids = cmis_ids_df['cmis_id'].tolist()
+        if st.button('Delete Records'):
+            bulk_delete_student_data(cmis_ids)
 
 # Run the app
 if __name__ == '__main__':
