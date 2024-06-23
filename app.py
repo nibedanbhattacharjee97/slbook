@@ -28,11 +28,19 @@ def create_table():
 
 # Function to insert booking into SQLite database
 def insert_booking(date, time_range, manager, spoc, booked_by):
+    if not booked_by:
+        st.error('Slot booking failed. You must provide your name in the "Your Name" field.')
+        return
+
     selected_date = datetime.strptime(date, '%Y-%m-%d')
     current_date = datetime.now()
 
     if selected_date < current_date:
         st.error('Slot booking failed. You cannot book slots for past dates.')
+        return
+
+    if selected_date.weekday() == 6:
+        st.error('Slot booking failed. Booking slots on Sundays is not allowed, For Special Permissions Call Pritam Basu Or Kousik Dey.')
         return
 
     conn = sqlite3.connect('slot_booking_new.db')
@@ -105,40 +113,42 @@ def generate_calendar(bookings):
                                        (bookings['date'].dt.month == current_month) &
                                        (bookings['date'].dt.day == day)]
 
-            if not bookings_on_day.empty:
-                days_html += '<div class="day booking"><span class="day-number">%d</span><br>%s</div>' % (
-                    day, weekday_names[date.weekday()])
+            if date.weekday() == 6:
+                day_style = 'background-color: red;'
+            elif not bookings_on_day.empty:
+                day_style = 'background-color: #b3e6b3;'
             else:
-                days_html += '<div class="day"><span class="day-number">%d</span><br>%s</div>' % (
-                    day, weekday_names[date.weekday()])
+                day_style = ''
 
-    calendar_html = """
+            days_html += f'<div class="day" style="{day_style}"><span class="day-number">{day}</span><br>{weekday_names[date.weekday()]}</div>'
+
+    calendar_html = f"""
     <style>
-        .calendar {
+        .calendar {{
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 10px;
             margin-top: 20px;
-        }
-        .day {
+        }}
+        .day {{
             padding: 10px;
             border: 1px solid #ccc;
             text-align: center;
-        }
-        .booking {
+        }}
+        .booking {{
             background-color: #b3e6b3;
             padding: 5px;
             font-size: 0.8em;
-        }
-        .day-number {
+        }}
+        .day-number {{
             font-size: 1.2em;
             font-weight: bold;
-        }
+        }}
     </style>
     <div class="calendar">
-        %s
+        {days_html}
     </div>
-    """ % days_html
+    """
 
     return calendar_html
 
@@ -154,6 +164,20 @@ def bulk_delete_student_data(cmis_ids):
     conn.close()
     st.success("Selected records deleted successfully.")
 
+# Function to delete booking by ID
+def delete_booking_by_id(booking_id, user_email):
+    allowed_email = "nibedan.b@anudip.org"
+    if user_email != allowed_email:
+        st.error("You do not have permission to delete booking data.")
+        return
+
+    conn = sqlite3.connect('slot_booking_new.db')
+    c = conn.cursor()
+    c.execute("DELETE FROM appointment_bookings WHERE id = ?", (booking_id,))
+    conn.commit()
+    conn.close()
+    st.success(f"Booking with ID {booking_id} deleted successfully.")
+
 # Main function for the Streamlit app
 def main():
     st.title('Slot Booking Platform')
@@ -165,22 +189,22 @@ def main():
     data = load_data('managers_spocs.xlsx')
 
     # Date selection
-    selected_date = st.date_input('Select a date')
+    selected_date = st.date_input('Select Date')
 
     # Time range selection
-    time_ranges = ['9:00 AM - 10:00 AM', '10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM',
+    time_ranges = ['10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM',
                    '12:00 PM - 1:00 PM', '2:00 PM - 3:00 PM', '3:00 PM - 4:00 PM']
-    selected_time_range = st.selectbox('Select a time range', time_ranges)
+    selected_time_range = st.selectbox('Select Time', time_ranges)
 
     # Manager selection
-    selected_manager = st.selectbox('Select a manager', data['Manager Name'].unique())
+    selected_manager = st.selectbox('Select Manager', data['Manager Name'].unique())
 
     # SPOC selection based on selected manager
     spocs_for_manager = data[data['Manager Name'] == selected_manager]['SPOC Name'].tolist()
-    selected_spoc = st.selectbox('Select a SPOC', spocs_for_manager)
+    selected_spoc = st.selectbox('Select SPOC', spocs_for_manager)
 
     # Booked by (user input)
-    booked_by = st.text_input('Your Name')
+    booked_by = st.text_input('Slot Booker Name')
 
     # Book button
     if st.button('Book Slot'):
@@ -206,7 +230,7 @@ def main():
         bookings['date'] = pd.to_datetime(bookings['date'])
 
     # Show calendar after booking attempt
-    st.subheader('Calendar View')
+    st.subheader('Calendar View (Current Month Status)')
     st.markdown(generate_calendar(bookings), unsafe_allow_html=True)
 
     # Display today's bookings
@@ -244,6 +268,13 @@ def main():
         cmis_ids = cmis_ids_df['cmis_id'].tolist()
         if st.button('Delete Records'):
             bulk_delete_student_data(cmis_ids)
+
+    # Delete booking by ID
+    st.header("Delete Booking by ID")
+    booking_id = st.number_input("Enter Booking ID to delete", min_value=1)
+    user_email = st.text_input("Enter your email")
+    if st.button("Delete Booking"):
+        delete_booking_by_id(booking_id, user_email)
 
 # Run the app
 if __name__ == '__main__':
