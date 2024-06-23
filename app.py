@@ -31,7 +31,7 @@ def create_table():
 # Function to insert booking into SQLite database
 def insert_booking(date, time_range, manager, spoc, booked_by):
     if not booked_by:
-        st.error('Slot booking failed. You must provide your name in the "Your Name" field.')
+        st.error('Slot booking failed. You must provide your name in the "Slot Booked By" field.')
         return
 
     selected_date = datetime.strptime(date, '%Y-%m-%d')
@@ -226,14 +226,14 @@ def main():
     selected_time_range = st.selectbox('Select Time', time_ranges)
 
     # Booked by (user input)
-    booked_by = st.text_input('Slot Booker Name')
+    booked_by = st.text_input('Slot Booked By')
 
     # Book button
     if st.button('Book Slot'):
         insert_booking(str(selected_date), selected_time_range, selected_manager, selected_spoc, booked_by)
 
     # Upload Excel file and update another database
-    st.subheader('Update Student Data For SPOC Calling')
+    st.subheader('Upload Student Data For SPOC Calling')
     file = st.file_uploader('Upload Excel', type=['xlsx', 'xls'])
     if file is not None:
         if st.button('Update Data'):
@@ -245,7 +245,7 @@ def main():
         download_sample_excel()
 
     # Download data button
-    if st.button('Download Data'):
+    if st.button('Download Data For M&E Purpose'):
         download_another_database_data()
 
     # Fetch all bookings
