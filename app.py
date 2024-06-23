@@ -240,7 +240,7 @@ def main():
             update_another_database(file)
 
     # Download sample Excel file
-    st.subheader('Download Sample Excel')
+    st.subheader('Download The Format To Update Student Data For SPOC Calling')
     if st.button('Download Sample'):
         download_sample_excel()
 
