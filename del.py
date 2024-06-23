@@ -1,4 +1,4 @@
-# del.py
+
 
 import sqlite3
 
