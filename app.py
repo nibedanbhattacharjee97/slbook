@@ -164,20 +164,6 @@ def bulk_delete_student_data(cmis_ids):
     conn.close()
     st.success("Selected records deleted successfully.")
 
-# Function to delete booking by ID
-def delete_booking_by_id(booking_id, user_email):
-    allowed_email = "nibedan.b@anudip.org"
-    if user_email != allowed_email:
-        st.error("You do not have permission to delete booking data.")
-        return
-
-    conn = sqlite3.connect('slot_booking_new.db')
-    c = conn.cursor()
-    c.execute("DELETE FROM appointment_bookings WHERE id = ?", (booking_id,))
-    conn.commit()
-    conn.close()
-    st.success(f"Booking with ID {booking_id} deleted successfully.")
-
 # Main function for the Streamlit app
 def main():
     st.title('Slot Booking Platform')
@@ -188,13 +174,6 @@ def main():
     # Load data using st.cache_data
     data = load_data('managers_spocs.xlsx')
 
-    # Date selection
-    selected_date = st.date_input('Select Date')
-
-    # Time range selection
-    time_ranges = ['10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM',
-                   '12:00 PM - 1:00 PM', '2:00 PM - 3:00 PM', '3:00 PM - 4:00 PM']
-    selected_time_range = st.selectbox('Select Time', time_ranges)
 
     # Manager selection
     selected_manager = st.selectbox('Select Manager', data['Manager Name'].unique())
@@ -202,6 +181,14 @@ def main():
     # SPOC selection based on selected manager
     spocs_for_manager = data[data['Manager Name'] == selected_manager]['SPOC Name'].tolist()
     selected_spoc = st.selectbox('Select SPOC', spocs_for_manager)
+
+    # Date selection
+    selected_date = st.date_input('Select Date')
+
+    # Time range selection
+    time_ranges = ['10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM',
+                   '12:00 PM - 1:00 PM', '2:00 PM - 3:00 PM', '3:00 PM - 4:00 PM']
+    selected_time_range = st.selectbox('Select Time', time_ranges)
 
     # Booked by (user input)
     booked_by = st.text_input('Slot Booker Name')
@@ -211,14 +198,14 @@ def main():
         insert_booking(str(selected_date), selected_time_range, selected_manager, selected_spoc, booked_by)
 
     # Upload Excel file and update another database
-    st.subheader('Upload Excel for another database update')
+    st.subheader('Update Student Data For SPOC Calling')
     file = st.file_uploader('Upload Excel', type=['xlsx', 'xls'])
     if file is not None:
-        if st.button('Update Another Database'):
+        if st.button('Update Data'):
             update_another_database(file)
 
     # Download data button
-    if st.button('Download Data from Another Database'):
+    if st.button('Download Data'):
         download_another_database_data()
 
     # Fetch all bookings
@@ -268,13 +255,6 @@ def main():
         cmis_ids = cmis_ids_df['cmis_id'].tolist()
         if st.button('Delete Records'):
             bulk_delete_student_data(cmis_ids)
-
-    # Delete booking by ID
-    st.header("Delete Booking by ID")
-    booking_id = st.number_input("Enter Booking ID to delete", min_value=1)
-    user_email = st.text_input("Enter your email")
-    if st.button("Delete Booking"):
-        delete_booking_by_id(booking_id, user_email)
 
 # Run the app
 if __name__ == '__main__':
