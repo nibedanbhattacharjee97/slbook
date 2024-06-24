@@ -43,7 +43,7 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
         return
 
     if selected_date.weekday() == 6:
-        st.error('Slot booking failed. Booking slots on Sundays is not allowed, For Special Permissions Call Pritam Basu Or Kousik Dey.')
+        st.error('Slot booking failed. To Book Slot on holidays & other than official hours please contact to Pritam Basu & Kousik Dey.')
         return
 
     conn = sqlite3.connect('slot_booking_new.db')
