@@ -6,7 +6,6 @@ from datetime import datetime
 import base64
 from io import BytesIO
 
-
 # Function to load data from Excel into a DataFrame with @st.cache_data
 @st.cache_data(hash_funcs={pd.DataFrame: lambda _: None})
 def load_data(file):
@@ -30,6 +29,8 @@ def create_table():
 
 # Function to insert booking into SQLite database
 def insert_booking(date, time_range, manager, spoc, booked_by):
+    st.write(f'Attempting to book slot for: Date: {date}, Time Range: {time_range}, Manager: {manager}, SPOC: {spoc}, Booked By: {booked_by}')
+    
     if not booked_by:
         st.error('Slot booking failed. You must provide your name in the "Slot Booked By" field.')
         return
@@ -228,16 +229,23 @@ def main():
     # Booked by (user input)
     booked_by = st.text_input('Slot Booked By')
 
-    # Book button
-    if st.button('Book Slot'):
-        insert_booking(str(selected_date), selected_time_range, selected_manager, selected_spoc, booked_by)
-
     # Upload Excel file and update another database
     st.subheader('Upload Student Data For SPOC Calling')
     file = st.file_uploader('Upload Excel', type=['xlsx', 'xls'])
+    data_uploaded = st.session_state.get('data_uploaded', False)
     if file is not None:
         if st.button('Update Data'):
             update_another_database(file)
+            st.session_state['data_uploaded'] = True
+            data_uploaded = True
+
+    # Only allow booking if data is uploaded
+    if not data_uploaded:
+        st.warning('Please upload student data before booking a slot.')
+    else:
+        # Book button
+        if st.button('Book Slot'):
+            insert_booking(str(selected_date), selected_time_range, selected_manager, selected_spoc, booked_by)
 
     # Download sample Excel file
     st.subheader('Download The Format To Update Student Data For SPOC Calling')
