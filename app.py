@@ -2,9 +2,58 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import calendar
-from datetime import datetime
+from datetime import datetime, timedelta
 import base64
 from io import BytesIO
+import os
+
+# Function to backup SQLite databases and save CSV backups
+def backup_databases():
+    # Ensure backup folder exists
+    backup_folder = 'database_backups'
+    if not os.path.exists(backup_folder):
+        os.makedirs(backup_folder)
+    
+    # Backup slot_booking_new.db
+    conn1 = sqlite3.connect('slot_booking_new.db')
+    backup_file1 = f"{backup_folder}/slot_booking_new_{datetime.now().strftime('%Y%m%d_%H%M%S')}.db"
+    if os.path.exists('slot_booking_new.db'):
+        conn1.backup(backup_file1)
+    conn1.close()
+    
+    # Backup duplicate.db
+    conn2 = sqlite3.connect('duplicate.db')
+    backup_file2 = f"{backup_folder}/duplicate_{datetime.now().strftime('%Y%m%d_%H%M%S')}.db"
+    if os.path.exists('duplicate.db'):
+        conn2.backup(backup_file2)
+    conn2.close()
+
+    # Backup data to CSV for additional safety
+    csv_backup_folder = f"{backup_folder}/csv_backups"
+    if not os.path.exists(csv_backup_folder):
+        os.makedirs(csv_backup_folder)
+
+    # Backup studentcap table from duplicate.db to CSV
+    conn_csv = sqlite3.connect('duplicate.db')
+    df = pd.read_sql_query("SELECT * FROM studentcap", conn_csv)
+    conn_csv.close()
+
+    if not df.empty:
+        csv_backup_file = f"{csv_backup_folder}/studentcap_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        df.to_csv(csv_backup_file, index=False)
+
+    st.success('Databases and CSV backups created successfully!')
+
+# Function to delete old backups older than 45 days
+def delete_old_backups():
+    backup_folder = 'database_backups'
+    if os.path.exists(backup_folder):
+        for filename in os.listdir(backup_folder):
+            file_path = os.path.join(backup_folder, filename)
+            if os.path.isfile(file_path):
+                creation_time = datetime.fromtimestamp(os.path.getctime(file_path))
+                if datetime.now() - creation_time > timedelta(days=45):
+                    os.remove(file_path)
 
 # Function to load data from Excel into a DataFrame with @st.cache_data
 @st.cache_data(hash_funcs={pd.DataFrame: lambda _: None})
@@ -169,8 +218,7 @@ def bulk_delete_studentcap(cmis_ids):
     conn.close()
     st.success("Selected records deleted successfully.")
 
-import xlsxwriter  # Import xlsxwriter module
-
+# Function to download sample Excel file
 def download_sample_excel():
     # Sample data for the Excel file
     sample_data = {
@@ -202,18 +250,17 @@ def download_sample_excel():
             column_len = max(df[col].astype(str).map(len).max(), len(col)) + 2
             worksheet.set_column(i, i, column_len)
 
-    # Resetting the buffer position to the start of the buffer
+    # Save the workbook
+    writer.save()
+
+    # Seek to the beginning of the BytesIO object
     output.seek(0)
 
-    # Encoding the Excel file in base64
-    excel_file = output.read()
-    b64 = base64.b64encode(excel_file).decode()
-
-    # Creating a download link for the Excel file
-    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Sample_Excel.xlsx">Download Sample Excel</a>'
-
-    # Displaying the download link in Streamlit
+    # Create a download link for the Excel file
+    b64 = base64.b64encode(output.read()).decode()
+    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="sample_excel.xlsx">Download Sample Excel</a>'
     st.markdown(href, unsafe_allow_html=True)
+
 
 # Main function for the Streamlit app
 def main():
@@ -317,6 +364,27 @@ def main():
         cmis_ids = cmis_ids_df['cmis_id'].tolist()
         if st.button('Delete Records'):
             bulk_delete_studentcap(cmis_ids)
+
+    # Backup and download button
+    st.header('Backup and Download Database')
+    if st.button('Backup Databases'):
+        backup_databases()
+        st.success('Databases backed up successfully.')
+
+    # Ensure old backups are deleted
+    delete_old_backups()
+
+    # Download backup files
+    backup_folder = 'database_backups'
+    if os.path.exists(backup_folder):
+        backup_files = os.listdir(backup_folder)
+        if backup_files:
+            st.subheader('Download Database Backups')
+            for file in backup_files:
+                backup_file_path = f"{backup_folder}/{file}"
+                b64 = base64.b64encode(open(backup_file_path, 'rb').read()).decode()
+                href = f'<a href="data:application/octet-stream;base64,{b64}" download="{file}">Download {file}</a>'
+                st.markdown(href, unsafe_allow_html=True)
 
 # Run the app
 if __name__ == '__main__':
