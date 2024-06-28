@@ -215,39 +215,6 @@ def download_sample_excel():
     # Displaying the download link in Streamlit
     st.markdown(href, unsafe_allow_html=True)
 
-# Function to schedule and save booking details as CSV
-def schedule_download():
-    conn = sqlite3.connect('slot_booking_new.db')
-    bookings = pd.read_sql_query("SELECT * FROM appointment_bookings", conn)
-    conn.close()
-    
-    if 'date' in bookings.columns:
-        bookings['date'] = pd.to_datetime(bookings['date'])
-    
-    # Generate file name with timestamp
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    file_name = f'Backup_Data/bookings_{timestamp}.csv'
-    
-    # Save bookings to CSV
-    bookings.to_csv(file_name, index=False)
-    st.success(f"Booking details saved to {file_name}")
-
-# Function to schedule and save booking details as CSV
-def schedule_download_students():
-    conn = sqlite3.connect('duplicate.db')
-    bookings = pd.read_sql_query("SELECT * FROM studentcap", conn)
-    conn.close()
-    
-    if 'date' in bookings.columns:
-        bookings['date'] = pd.to_datetime(bookings['date'])
-    
-    # Generate file name with timestamp
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    file_name = f'Backup_Data/bookings_{timestamp}.csv'
-    
-    # Save bookings to CSV
-    bookings.to_csv(file_name, index=False)
-    st.success(f"Booking details saved to {file_name}")
 
 
 # Main function for the Streamlit app
@@ -353,15 +320,7 @@ def main():
         if st.button('Delete Records'):
             bulk_delete_studentcap(cmis_ids)
 
-    # Schedule download button
-    st.header('Schedule Data Backup')
-    if st.button('Schedule Backup'):
-        schedule_download()
 
-    # Schedule download button
-    st.header('Schedule Data Backup For Students')
-    if st.button('Schedule_Another'):
-        schedule_download_students()
     
 # Run the app
 if __name__ == '__main__':
