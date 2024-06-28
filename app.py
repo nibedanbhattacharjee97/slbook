@@ -4,8 +4,9 @@ import sqlite3
 import calendar
 from datetime import datetime, timedelta
 import base64
-from io import BytesIO
 import os
+import shutil
+from io import BytesIO
 
 # Function to backup SQLite databases and save CSV backups
 def backup_databases():
@@ -15,18 +16,18 @@ def backup_databases():
         os.makedirs(backup_folder)
     
     # Backup slot_booking_new.db
-    conn1 = sqlite3.connect('slot_booking_new.db')
+    source_file1 = 'slot_booking_new.db'
     backup_file1 = f"{backup_folder}/slot_booking_new_{datetime.now().strftime('%Y%m%d_%H%M%S')}.db"
-    if os.path.exists('slot_booking_new.db'):
-        conn1.backup(backup_file1)
-    conn1.close()
+    
+    if os.path.exists(source_file1):
+        shutil.copy(source_file1, backup_file1)
     
     # Backup duplicate.db
-    conn2 = sqlite3.connect('duplicate.db')
+    source_file2 = 'duplicate.db'
     backup_file2 = f"{backup_folder}/duplicate_{datetime.now().strftime('%Y%m%d_%H%M%S')}.db"
-    if os.path.exists('duplicate.db'):
-        conn2.backup(backup_file2)
-    conn2.close()
+    
+    if os.path.exists(source_file2):
+        shutil.copy(source_file2, backup_file2)
 
     # Backup data to CSV for additional safety
     csv_backup_folder = f"{backup_folder}/csv_backups"
@@ -235,157 +236,103 @@ def download_sample_excel():
     df = pd.DataFrame(sample_data)
 
     # Creating a BytesIO object to store the Excel file
-    output = BytesIO()
+    excel_file = BytesIO()
 
-    # Using ExcelWriter with xlsxwriter engine to write the DataFrame to Excel format in the BytesIO object
-    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+    # Writing the DataFrame to the BytesIO object as an Excel file
+    with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
         df.to_excel(writer, index=False, sheet_name='Sheet1')
 
-        # Get the xlsxwriter workbook and worksheet objects
-        workbook  = writer.book
-        worksheet = writer.sheets['Sheet1']
+    # Resetting the position of the BytesIO object to the beginning
+    excel_file.seek(0)
 
-        # Adjust column width
-        for i, col in enumerate(df.columns):
-            column_len = max(df[col].astype(str).map(len).max(), len(col)) + 2
-            worksheet.set_column(i, i, column_len)
+    # Creating a base64 encoded link to download the Excel file
+    b64 = base64.b64encode(excel_file.read()).decode()
+    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="sample_excel.xlsx">Download sample Excel file</a>'
 
-    # Save the workbook
-    writer.save()
+    return href
 
-    # Seek to the beginning of the BytesIO object
-    output.seek(0)
-
-    # Create a download link for the Excel file
-    b64 = base64.b64encode(output.read()).decode()
-    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="sample_excel.xlsx">Download Sample Excel</a>'
-    st.markdown(href, unsafe_allow_html=True)
-
-
-# Main function for the Streamlit app
+# Main Streamlit application
 def main():
-    st.title('Slot Booking Platform')
+    st.title('Database Management and Operations')
 
-    # Ensure table exists in SQLite database
-    create_table()
+    st.sidebar.title('Options')
+    selected_option = st.sidebar.selectbox('Select an option', ('Home', 'Book Slot', 'Manage Data', 'Backup & Delete'))
 
-    # Load data using st.cache_data
-    data = load_data('managers_spocs.xlsx')
+    if selected_option == 'Home':
+        st.header('Welcome to Database Management Portal')
+        st.write('Please select an option from the sidebar.')
 
-    # Manager selection
-    selected_manager = st.selectbox('Select Manager', data['Manager Name'].unique())
+    elif selected_option == 'Book Slot':
+        st.header('Book a Slot')
 
-    # SPOC selection based on selected manager
-    spocs_for_manager = data[data['Manager Name'] == selected_manager]['SPOC Name'].tolist()
-    selected_spoc = st.selectbox('Select SPOC', spocs_for_manager)
+        create_table()
 
-    # Date selection
-    selected_date = st.date_input('Select Date')
+        # Date selection
+        st.subheader('Select Date')
+        date = st.date_input('Date')
 
-    # Time range selection
-    time_ranges = ['10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM',
-                   '12:00 PM - 1:00 PM', '2:00 PM - 3:00 PM', '3:00 PM - 4:00 PM']
-    selected_time_range = st.selectbox('Select Time', time_ranges)
+        # Time range selection
+        st.subheader('Select Time Range')
+        time_range_options = ['10:00 AM - 12:00 PM', '2:00 PM - 4:00 PM']
+        time_range = st.selectbox('Time Range', time_range_options)
 
-    # Booked by (user input)
-    booked_by = st.text_input('Slot Booked By')
+        # Manager and SPOC selection
+        st.subheader('Enter Manager and SPOC Details')
+        manager = st.text_input('Manager Name')
+        spoc = st.text_input('SPOC Name')
 
-    # Upload Excel file and update another database
-    st.subheader('Upload Student Data For SPOC Calling')
-    file = st.file_uploader('Upload Excel', type=['xlsx', 'xls'])
-    data_uploaded = st.session_state.get('data_uploaded', False)
-    if file is not None:
-        if st.button('Update Data'):
-            update_another_database(file)
-            st.session_state['data_uploaded'] = True
-            data_uploaded = True
+        # Booked by
+        st.subheader('Enter Your Name')
+        booked_by = st.text_input('Slot Booked By')
 
-    # Only allow booking if data is uploaded
-    if not data_uploaded:
-        st.warning('Please upload student data before booking a slot.')
-    else:
-        # Book button
+        # Submit button to book slot
         if st.button('Book Slot'):
-            insert_booking(str(selected_date), selected_time_range, selected_manager, selected_spoc, booked_by)
+            insert_booking(date.strftime('%Y-%m-%d'), time_range, manager, spoc, booked_by)
 
-    # Download sample Excel file
-    st.subheader('Download The Format To Update Student Data For SPOC Calling')
-    if st.button('Download Sample'):
-        download_sample_excel()
+    elif selected_option == 'Manage Data':
+        st.header('Manage Data')
 
-    # Download data button
-    if st.button('Download Data For M&E Purpose'):
-        download_another_database_data()
+        # Upload Excel file to update another database
+        st.subheader('Update Another Database from Excel File')
+        file = st.file_uploader('Upload Excel file', type=['xlsx', 'xls'])
+        if file is not None:
+            if st.button('Update Database'):
+                update_another_database(file)
 
-    # Fetch all bookings
-    conn = sqlite3.connect('slot_booking_new.db')
-    bookings = pd.read_sql_query("SELECT * FROM appointment_bookings", conn)
-    conn.close()
+        # Download data from another database
+        st.subheader('Download Data from Another Database')
+        if st.button('Download Data'):
+            download_another_database_data()
 
-    if 'date' in bookings.columns:
-        bookings['date'] = pd.to_datetime(bookings['date'])
-
-    # Show calendar after booking attempt
-    st.subheader('Calendar View (Current Month Status)')
-    st.markdown(generate_calendar(bookings), unsafe_allow_html=True)
-
-    # Display today's bookings
-    st.header("Today's Bookings")
-
-    current_date = datetime.now().strftime("%Y-%m-%d")
-    conn = sqlite3.connect('slot_booking_new.db')
-    c = conn.cursor()
-    c.execute(
-        "SELECT date, time_range, manager, spoc FROM appointment_bookings WHERE date = ?",
-        (current_date,)
-    )
-    today_booking_details = c.fetchall()
-    conn.close()
-
-    if today_booking_details:
-        st.write(f"Bookings for today ({current_date}):")
-        for detail in today_booking_details:
-            st.write(f"- Time Slot: {detail[1]}, Manager: {detail[2]}, SPOC: {detail[3]}")
-    else:
-        st.write("No bookings for today.")
-
-    # Download button for monthly data
-    if st.button('Download Monthly Data'):
-        csv = bookings.to_csv(index=False)
-        b64 = base64.b64encode(csv.encode()).decode()
-        href = f'<a href="data:file/csv;base64,{b64}" download="monthly_bookings.csv">Download CSV</a>'
-        st.markdown(href, unsafe_allow_html=True)
-
-    # Bulk delete student data
-    st.header('Bulk Delete Student Data')
-    file = st.file_uploader('Upload CSV with CMIS IDs to delete', type=['csv'])
-    if file is not None:
-        cmis_ids_df = pd.read_csv(file)
-        cmis_ids = cmis_ids_df['cmis_id'].tolist()
+        # Bulk delete from another database
+        st.subheader('Bulk Delete from Another Database')
+        cmis_ids = st.text_area('Enter CMIS IDs to delete (comma-separated)', height=100)
+        cmis_ids = [x.strip() for x in cmis_ids.split(',')]
         if st.button('Delete Records'):
             bulk_delete_studentcap(cmis_ids)
 
-    # Backup and download button
-    st.header('Backup and Download Database')
-    if st.button('Backup Databases'):
-        backup_databases()
-        st.success('Databases backed up successfully.')
+    elif selected_option == 'Backup & Delete':
+        st.header('Backup and Delete')
 
-    # Ensure old backups are deleted
-    delete_old_backups()
+        # Backup databases
+        if st.button('Backup Databases'):
+            backup_databases()
 
-    # Download backup files
-    backup_folder = 'database_backups'
-    if os.path.exists(backup_folder):
-        backup_files = os.listdir(backup_folder)
-        if backup_files:
-            st.subheader('Download Database Backups')
-            for file in backup_files:
-                backup_file_path = f"{backup_folder}/{file}"
-                b64 = base64.b64encode(open(backup_file_path, 'rb').read()).decode()
-                href = f'<a href="data:application/octet-stream;base64,{b64}" download="{file}">Download {file}</a>'
-                st.markdown(href, unsafe_allow_html=True)
+        # Delete old backups
+        if st.button('Delete Old Backups'):
+            delete_old_backups()
 
-# Run the app
+    # Footer with sample Excel download link
+    st.sidebar.markdown('---')
+    st.sidebar.subheader('Download Sample Excel File')
+    st.sidebar.markdown(download_sample_excel(), unsafe_allow_html=True)
+
+    # Calendar view of bookings
+    st.sidebar.subheader('Calendar View')
+    conn = sqlite3.connect('slot_booking_new.db')
+    bookings = pd.read_sql_query("SELECT * FROM appointment_bookings", conn)
+    conn.close()
+    st.sidebar.markdown(generate_calendar(bookings), unsafe_allow_html=True)
+
 if __name__ == '__main__':
     main()
