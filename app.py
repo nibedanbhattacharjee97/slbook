@@ -214,6 +214,14 @@ def download_sample_excel():
     # Displaying the download link in Streamlit
     st.markdown(href, unsafe_allow_html=True)
 
+def parse_date(date_str):
+    for fmt in ("%d-%m-%Y", "%Y-%m-%d"):
+        try:
+            return pd.to_datetime(date_str, format=fmt)
+        except ValueError:
+            continue
+    return pd.to_datetime(date_str, errors='coerce')
+
 # Main function for the Streamlit app
 def main():
     st.title('Slot Booking Platform')
@@ -221,18 +229,22 @@ def main():
     # Ensure table exists in SQLite database
     create_table()
 
-    # Load data using st.cache_data
-    data = load_data('managers_spocs.xlsx')
-
-    # Manager selection
-    selected_manager = st.selectbox('Select Manager', data['Manager Name'].unique())
-
-    # SPOC selection based on selected manager
-    spocs_for_manager = data[data['Manager Name'] == selected_manager]['SPOC Name'].tolist()
-    selected_spoc = st.selectbox('Select SPOC', spocs_for_manager)
+    # Load data
+    uploaded_file = st.file_uploader('Upload Excel', type=['xlsx', 'xls'])
+    if uploaded_file:
+        df = load_data(uploaded_file)
+        st.dataframe(df.head())
 
     # Date selection
     selected_date = st.date_input('Select Date')
+
+    # Manager selection
+    managers = ['Manager 1', 'Manager 2', 'Manager 3']
+    selected_manager = st.selectbox('Select Manager', managers)
+
+    # SPOC selection
+    spocs = ['SPOC 1', 'SPOC 2', 'SPOC 3']
+    selected_spoc = st.selectbox('Select SPOC', spocs)
 
     # Time range selection
     time_ranges = ['10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM',
@@ -276,7 +288,7 @@ def main():
 
     if 'date' in bookings.columns:
         try:
-            bookings['date'] = pd.to_datetime(bookings['date'])
+            bookings['date'] = bookings['date'].apply(parse_date)
         except Exception as e:
             st.error(f"Error converting 'date' column to datetime: {e}")
             bookings['date'] = pd.to_datetime(bookings['date'], errors='coerce')
@@ -325,4 +337,3 @@ def main():
 # Run the app
 if __name__ == '__main__':
     main()
-    
