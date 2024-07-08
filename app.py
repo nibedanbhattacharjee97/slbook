@@ -5,6 +5,7 @@ import calendar
 from datetime import datetime
 import base64
 from io import BytesIO
+import xlsxwriter  # Import xlsxwriter module
 
 # Function to load data from Excel into a DataFrame with @st.cache_data
 @st.cache_data(hash_funcs={pd.DataFrame: lambda _: None})
@@ -169,8 +170,6 @@ def bulk_delete_studentcap(cmis_ids):
     conn.close()
     st.success("Selected records deleted successfully.")
 
-import xlsxwriter  # Import xlsxwriter module
-
 def download_sample_excel():
     # Sample data for the Excel file
     sample_data = {
@@ -214,8 +213,6 @@ def download_sample_excel():
 
     # Displaying the download link in Streamlit
     st.markdown(href, unsafe_allow_html=True)
-
-
 
 # Main function for the Streamlit app
 def main():
@@ -278,7 +275,12 @@ def main():
     conn.close()
 
     if 'date' in bookings.columns:
-        bookings['date'] = pd.to_datetime(bookings['date'])
+        try:
+            bookings['date'] = pd.to_datetime(bookings['date'])
+        except Exception as e:
+            st.error(f"Error converting 'date' column to datetime: {e}")
+            bookings['date'] = pd.to_datetime(bookings['date'], errors='coerce')
+            bookings.dropna(subset=['date'], inplace=True)
 
     # Show calendar after booking attempt
     st.subheader('Calendar View (Current Month Status)')
@@ -320,8 +322,7 @@ def main():
         if st.button('Delete Records'):
             bulk_delete_studentcap(cmis_ids)
 
-
-    
 # Run the app
 if __name__ == '__main__':
     main()
+    
