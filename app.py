@@ -278,7 +278,10 @@ def main():
     conn.close()
 
     if 'date' in bookings.columns:
-        bookings['date'] = pd.to_datetime(bookings['date'], format='%Y-%m-%d')
+        try:
+            bookings['date'] = pd.to_datetime(bookings['date'], format='%Y-%m-%d')
+        except Exception as e:
+            st.error(f"Error parsing dates: {e}")
 
     # Show calendar after booking attempt
     st.subheader('Calendar View (Current Month Status)')
@@ -320,8 +323,6 @@ def main():
         if st.button('Delete Records'):
             bulk_delete_studentcap(cmis_ids)
 
-
-    
 # Run the app
 if __name__ == '__main__':
     main()
