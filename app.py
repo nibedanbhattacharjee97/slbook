@@ -29,6 +29,8 @@ def create_table():
 
 # Function to insert booking into SQLite database
 def insert_booking(date, time_range, manager, spoc, booked_by):
+    st.write(f'Attempting to book slot for: Date: {date}, Time Range: {time_range}, Manager: {manager}, SPOC: {spoc}, Booked By: {booked_by}')
+    
     if not booked_by:
         st.error('Slot booking failed. You must provide your name in the "Slot Booked By" field.')
         return
@@ -41,7 +43,7 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
         return
 
     if selected_date.weekday() == 6:
-        st.error('Slot booking failed. Booking slots on Sundays is not allowed, For Special Permissions Call Pritam Basu Or Kousik Dey.')
+        st.error('If Error Message Reflects Or To Book Slot On Holidays & Other Than Official Hours Please Contact To Pritam Basu & Kousik Dey.')
         return
 
     conn = sqlite3.connect('slot_booking_new.db')
@@ -74,13 +76,15 @@ def update_another_database(file):
                  student_name TEXT,
                  cmis_ph_no TEXT,
                  center_name TEXT,
-                 uploader_name TEXT)''')
+                 uploader_name TEXT,
+                 verification_type TEXT,
+                 mode_of_verification TEXT)''')
     conn.commit()
 
     for index, row in df.iterrows():
-        c.execute('''INSERT INTO student_data (cmis_id, student_name, cmis_ph_no, center_name, uploader_name)
-                     VALUES (?, ?, ?, ?, ?)''', (row['CMIS ID'], row['Student Name'], row['CMIS PH No(10 Number)'],
-                                                row['Center Name'], row['Name Of Uploder']))
+        c.execute('''INSERT INTO student_data (cmis_id, student_name, cmis_ph_no, center_name, uploader_name, verification_type, mode_of_verification)
+                     VALUES (?, ?, ?, ?, ?, ?, ?)''', (row['CMIS ID'], row['Student Name'], row['CMIS PH No(10 Number)'],
+                                                row['Center Name'], row['Name Of Uploder'], row['Verification Type'], row['Mode Of Verification']))
     conn.commit()
     conn.close()
 
@@ -173,7 +177,9 @@ def download_sample_excel():
         'Student Name': ['John Doe', 'Jane Smith', 'Jim Beam'],
         'CMIS PH No(10 Number)': ['1234567890', '0987654321', '1122334455'],
         'Center Name': ['Center 1', 'Center 2', 'Center 3'],
-        'Name Of Uploder': ['Uploader 1', 'Uploader 2', 'Uploader 3']
+        'Name Of Uploder': ['Uploader 1', 'Uploader 2', 'Uploader 3'],
+        'Verification Type': ['Type 1', 'Type 2', 'Type 3'],
+        'Mode Of Verification': ['Online', 'Offline', 'Hybrid']
     }
     
     # Creating a DataFrame from the sample data
@@ -230,10 +236,11 @@ def main():
     # Upload Excel file and update another database
     st.subheader('Upload Student Data For SPOC Calling')
     file = st.file_uploader('Upload Excel', type=['xlsx', 'xls'])
-    data_uploaded = False
+    data_uploaded = st.session_state.get('data_uploaded', False)
     if file is not None:
         if st.button('Update Data'):
             update_another_database(file)
+            st.session_state['data_uploaded'] = True
             data_uploaded = True
 
     # Only allow booking if data is uploaded
