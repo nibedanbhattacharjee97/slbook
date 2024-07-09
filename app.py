@@ -278,7 +278,7 @@ def main():
     conn.close()
 
     if 'date' in bookings.columns:
-        bookings['date'] = pd.to_datetime(bookings['date'])
+        bookings['date'] = pd.to_datetime(bookings['date'], format='%Y-%m-%d')
 
     # Show calendar after booking attempt
     st.subheader('Calendar View (Current Month Status)')
