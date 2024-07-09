@@ -4,6 +4,7 @@ import sqlite3
 import calendar
 from datetime import datetime
 import base64
+from io import BytesIO
 
 # Function to load data from Excel into a DataFrame with @st.cache_data
 @st.cache_data(hash_funcs={pd.DataFrame: lambda _: None})
@@ -29,7 +30,7 @@ def create_table():
 # Function to insert booking into SQLite database
 def insert_booking(date, time_range, manager, spoc, booked_by):
     if not booked_by:
-        st.error('Slot booking failed. You must provide your name in the "Your Name" field.')
+        st.error('Slot booking failed. You must provide your name in the "Slot Booked By" field.')
         return
 
     selected_date = datetime.strptime(date, '%Y-%m-%d')
@@ -164,6 +165,40 @@ def bulk_delete_student_data(cmis_ids):
     conn.close()
     st.success("Selected records deleted successfully.")
 
+# Function to download a sample Excel file
+def download_sample_excel():
+    # Sample data for the Excel file
+    sample_data = {
+        'CMIS ID': ['123', '456', '789'],
+        'Student Name': ['John Doe', 'Jane Smith', 'Jim Beam'],
+        'CMIS PH No(10 Number)': ['1234567890', '0987654321', '1122334455'],
+        'Center Name': ['Center 1', 'Center 2', 'Center 3'],
+        'Name Of Uploder': ['Uploader 1', 'Uploader 2', 'Uploader 3']
+    }
+    
+    # Creating a DataFrame from the sample data
+    df = pd.DataFrame(sample_data)
+    
+    # Creating a BytesIO object to store the Excel file
+    output = BytesIO()
+    
+    # Using ExcelWriter to write the DataFrame to Excel format in the BytesIO object
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Sheet1')
+    
+    # Resetting the buffer position to the start of the buffer
+    output.seek(0)
+    
+    # Encoding the Excel file in base64
+    excel_file = output.read()
+    b64 = base64.b64encode(excel_file).decode()
+    
+    # Creating a download link for the Excel file
+    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Sample_Excel.xlsx">Download Sample Excel</a>'
+    
+    # Displaying the download link in Streamlit
+    st.markdown(href, unsafe_allow_html=True)
+
 # Main function for the Streamlit app
 def main():
     st.title('Slot Booking Platform')
@@ -174,6 +209,13 @@ def main():
     # Load data using st.cache_data
     data = load_data('managers_spocs.xlsx')
 
+    # Manager selection
+    selected_manager = st.selectbox('Select Manager', data['Manager Name'].unique())
+
+    # SPOC selection based on selected manager
+    spocs_for_manager = data[data['Manager Name'] == selected_manager]['SPOC Name'].tolist()
+    selected_spoc = st.selectbox('Select SPOC', spocs_for_manager)
+
     # Date selection
     selected_date = st.date_input('Select Date')
 
@@ -182,29 +224,33 @@ def main():
                    '12:00 PM - 1:00 PM', '2:00 PM - 3:00 PM', '3:00 PM - 4:00 PM']
     selected_time_range = st.selectbox('Select Time', time_ranges)
 
-    # Manager selection
-    selected_manager = st.selectbox('Select Manager', data['Manager Name'].unique())
-
-    # SPOC selection based on selected manager
-    spocs_for_manager = data[data['Manager Name'] == selected_manager]['SPOC Name'].tolist()
-    selected_spoc = st.selectbox('Select SPOC', spocs_for_manager)
-
     # Booked by (user input)
-    booked_by = st.text_input('Slot Booker Name')
-
-    # Book button
-    if st.button('Book Slot'):
-        insert_booking(str(selected_date), selected_time_range, selected_manager, selected_spoc, booked_by)
+    booked_by = st.text_input('Slot Booked By')
 
     # Upload Excel file and update another database
-    st.subheader('Update Student Data For SPOC Calling')
+    st.subheader('Upload Student Data For SPOC Calling')
     file = st.file_uploader('Upload Excel', type=['xlsx', 'xls'])
+    data_uploaded = False
     if file is not None:
         if st.button('Update Data'):
             update_another_database(file)
+            data_uploaded = True
+
+    # Only allow booking if data is uploaded
+    if not data_uploaded:
+        st.warning('Please upload student data before booking a slot.')
+    else:
+        # Book button
+        if st.button('Book Slot'):
+            insert_booking(str(selected_date), selected_time_range, selected_manager, selected_spoc, booked_by)
+
+    # Download sample Excel file
+    st.subheader('Download The Format To Update Student Data For SPOC Calling')
+    if st.button('Download Sample'):
+        download_sample_excel()
 
     # Download data button
-    if st.button('Download Data'):
+    if st.button('Download Data For M&E Purpose'):
         download_another_database_data()
 
     # Fetch all bookings
