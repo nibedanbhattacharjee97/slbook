@@ -68,9 +68,9 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
 def update_another_database(file):
     df = pd.read_excel(file)
 
-    conn = sqlite3.connect('another_database.db')
+    conn = sqlite3.connect('duplicate.db')
     c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS student_data
+    c.execute('''CREATE TABLE IF NOT EXISTS studentcap
                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
                  cmis_id TEXT,
                  student_name TEXT,
@@ -82,7 +82,7 @@ def update_another_database(file):
     conn.commit()
 
     for index, row in df.iterrows():
-        c.execute('''INSERT INTO student_data (cmis_id, student_name, cmis_ph_no, center_name, uploader_name, verification_type, mode_of_verification)
+        c.execute('''INSERT INTO studentcap (cmis_id, student_name, cmis_ph_no, center_name, uploader_name, verification_type, mode_of_verification)
                      VALUES (?, ?, ?, ?, ?, ?, ?)''', (row['CMIS ID'], row['Student Name'], row['CMIS PH No(10 Number)'],
                                                 row['Center Name'], row['Name Of Uploder'], row['Verification Type'], row['Mode Of Verification']))
     conn.commit()
@@ -90,15 +90,15 @@ def update_another_database(file):
 
     st.success('Data updated successfully!')
 
-# Function to download data from another_database.db
+# Function to download data from duplicate.db
 def download_another_database_data():
-    conn = sqlite3.connect('another_database.db')
-    df = pd.read_sql_query("SELECT * FROM student_data", conn)
+    conn = sqlite3.connect('duplicate.db')
+    df = pd.read_sql_query("SELECT * FROM studentcap", conn)
     conn.close()
     
     csv = df.to_csv(index=False)
     b64 = base64.b64encode(csv.encode()).decode()
-    href = f'<a href="data:file/csv;base64,{b64}" download="student_data.csv">Download CSV</a>'
+    href = f'<a href="data:file/csv;base64,{b64}" download="studentcap.csv">Download CSV</a>'
     st.markdown(href, unsafe_allow_html=True)
 
 # Function to generate HTML for calendar view with bookings highlighted
@@ -157,19 +157,20 @@ def generate_calendar(bookings):
 
     return calendar_html
 
-# Function to bulk delete data from student_data table in another_database.db by cmis_id
-def bulk_delete_student_data(cmis_ids):
-    conn = sqlite3.connect('another_database.db')
+# Function to bulk delete data from studentcap table in duplicate.db by cmis_id
+def bulk_delete_studentcap(cmis_ids):
+    conn = sqlite3.connect('duplicate.db')
     c = conn.cursor()
     
     for cmis_id in cmis_ids:
-        c.execute("DELETE FROM student_data WHERE cmis_id = ?", (cmis_id,))
+        c.execute("DELETE FROM studentcap WHERE cmis_id = ?", (cmis_id,))
     
     conn.commit()
     conn.close()
     st.success("Selected records deleted successfully.")
 
-# Function to download a sample Excel file
+import xlsxwriter  # Import xlsxwriter module
+
 def download_sample_excel():
     # Sample data for the Excel file
     sample_data = {
@@ -178,30 +179,39 @@ def download_sample_excel():
         'CMIS PH No(10 Number)': ['1234567890', '0987654321', '1122334455'],
         'Center Name': ['Center 1', 'Center 2', 'Center 3'],
         'Name Of Uploder': ['Uploader 1', 'Uploader 2', 'Uploader 3'],
-        'Verification Type': ['Placement', 'Placement', 'Placement'],
-        'Mode Of Verification': ['G-Meet', 'G-Meet', 'Call']
+        'Verification Type': ['Enrollment', 'Enrollment', 'Enrollment', ],
+        'Mode Of Verification': ['G-meet', 'Call', 'MSG']
     }
-    
+
     # Creating a DataFrame from the sample data
     df = pd.DataFrame(sample_data)
-    
+
     # Creating a BytesIO object to store the Excel file
     output = BytesIO()
-    
-    # Using ExcelWriter to write the DataFrame to Excel format in the BytesIO object
+
+    # Using ExcelWriter with xlsxwriter engine to write the DataFrame to Excel format in the BytesIO object
     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
         df.to_excel(writer, index=False, sheet_name='Sheet1')
-    
+
+        # Get the xlsxwriter workbook and worksheet objects
+        workbook  = writer.book
+        worksheet = writer.sheets['Sheet1']
+
+        # Adjust column width
+        for i, col in enumerate(df.columns):
+            column_len = max(df[col].astype(str).map(len).max(), len(col)) + 2
+            worksheet.set_column(i, i, column_len)
+
     # Resetting the buffer position to the start of the buffer
     output.seek(0)
-    
+
     # Encoding the Excel file in base64
     excel_file = output.read()
     b64 = base64.b64encode(excel_file).decode()
-    
+
     # Creating a download link for the Excel file
     href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Sample_Excel.xlsx">Download Sample Excel</a>'
-    
+
     # Displaying the download link in Streamlit
     st.markdown(href, unsafe_allow_html=True)
 
@@ -306,7 +316,7 @@ def main():
         cmis_ids_df = pd.read_csv(file)
         cmis_ids = cmis_ids_df['cmis_id'].tolist()
         if st.button('Delete Records'):
-            bulk_delete_student_data(cmis_ids)
+            bulk_delete_studentcap(cmis_ids)
 
 # Run the app
 if __name__ == '__main__':
