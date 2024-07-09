@@ -179,8 +179,8 @@ def download_sample_excel():
         'CMIS PH No(10 Number)': ['1234567890', '0987654321', '1122334455'],
         'Center Name': ['Center 1', 'Center 2', 'Center 3'],
         'Name Of Uploder': ['Uploader 1', 'Uploader 2', 'Uploader 3'],
-        'Verification Type': ['Enrollment', 'Enrollment', 'Enrollment', ],
-        'Mode Of Verification': ['G-meet', 'Call', 'MSG']
+        'Verification Type': ['Placement', 'Placement', 'Enrollment', ],
+        'Mode Of Verification': ['G-meet', 'Call', 'Call']
     }
 
     # Creating a DataFrame from the sample data
