@@ -2,27 +2,45 @@ import sqlite3
 import pandas as pd
 import streamlit as st
 
-# Function to upload and update slot_booking_new.db with CSV data
-def upload_slot_booking_csv(file):
-    # Read the CSV file
-    df = pd.read_csv(file)
+# Function to upload and update slot_booking_new.db with CSV or Excel data
+def upload_slot_booking(file):
+    file_extension = file.name.split('.')[-1]
+    
+    # Read the file based on its extension
+    if file_extension == 'csv':
+        df = pd.read_csv(file)
+    elif file_extension in ['xls', 'xlsx']:
+        df = pd.read_excel(file)
+    else:
+        st.error("Unsupported file format")
+        return
+    
     # Connect to the SQLite database
     conn = sqlite3.connect('slot_booking_new.db')
-    # Update the database with the CSV data
+    # Update the database with the file data
     df.to_sql('appointment_bookings', conn, if_exists='replace', index=False)
     conn.close()
-    st.success('slot_booking_new.db updated successfully with CSV data.')
+    st.success('slot_booking_new.db updated successfully with uploaded data.')
 
-# Function to upload and update duplicate.db with CSV data
-def upload_duplicate_csv(file):
-    # Read the CSV file
-    df = pd.read_csv(file)
+# Function to upload and update duplicate.db with CSV or Excel data
+def upload_duplicate(file):
+    file_extension = file.name.split('.')[-1]
+    
+    # Read the file based on its extension
+    if file_extension == 'csv':
+        df = pd.read_csv(file)
+    elif file_extension in ['xls', 'xlsx']:
+        df = pd.read_excel(file)
+    else:
+        st.error("Unsupported file format")
+        return
+    
     # Connect to the SQLite database
     conn = sqlite3.connect('duplicate.db')
-    # Update the database with the CSV data
+    # Update the database with the file data
     df.to_sql('studentcap', conn, if_exists='replace', index=False)
     conn.close()
-    st.success('duplicate.db updated successfully with CSV data.')
+    st.success('duplicate.db updated successfully with uploaded data.')
 
 # Function to view data from slot_booking_new.db
 def view_slot_booking_data():
@@ -56,15 +74,15 @@ def export_duplicate_to_csv():
 def main():
     st.title('Database Upload and View')
 
-    st.header('Upload CSV Files to Update Databases')
+    st.header('Upload Files to Update Databases')
 
-    slot_booking_file = st.file_uploader('Upload slot_booking_new.csv', type=['csv'])
+    slot_booking_file = st.file_uploader('Upload slot_booking_new.csv or slot_booking_new.xlsx', type=['csv', 'xls', 'xlsx'])
     if slot_booking_file:
-        upload_slot_booking_csv(slot_booking_file)
+        upload_slot_booking(slot_booking_file)
 
-    duplicate_file = st.file_uploader('Upload duplicate.csv', type=['csv'])
+    duplicate_file = st.file_uploader('Upload duplicate.csv or duplicate.xlsx', type=['csv', 'xls', 'xlsx'])
     if duplicate_file:
-        upload_duplicate_csv(duplicate_file)
+        upload_duplicate(duplicate_file)
 
     st.header('View Database Data')
 
