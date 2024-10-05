@@ -39,7 +39,7 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
     current_date = datetime.now()
 
     # List of holiday dates (for example, Durga Puja)
-    holidays = ['2024-10-10', '2024-10-11']  # Add dates in 'YYYY-MM-DD' format
+    holidays = ['2024-10-10', '2024-10-11','2024-10-12']  # Add dates in 'YYYY-MM-DD' format
 
     # Check if the selected date falls on the holiday
     if selected_date.strftime('%Y-%m-%d') in holidays:
