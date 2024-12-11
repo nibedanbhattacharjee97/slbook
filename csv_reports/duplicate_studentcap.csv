@@ -1,0 +1,506 @@
+id,booking_id,cmis_id,student_name,cmis_ph_no,center_name,uploader_name,verification_type,mode_of_verification
+1.0,,AF0405822,Merina Mallick,7008461436,ODBAD,Monalisa Moharana,Enrollment,Call
+2.0,,AF0408223,K Manjushree,8457089229,ODBAD,Monalisa Moharana,Enrollment,Call
+3.0,,AF0403942,VAIBHAV VIJAY KULKARNI,8308410478,GOMOH SAVE CENTRE,SHYAM KUMAR,,G-MEET
+4.0,,AF0404055,MUKESH KUMAR.,8931072355,GOMOH SAVE CENTRE,SHYAM KUMAR,,G-MEET
+5.0,,AF0407799,RANGANA PADMAVATHI,9346824356,GOMOH SAVE CENTRE,SHYAM KUMAR,,G-MEET
+6.0,,AF0408228,SANDHYA AHIRWAR,9301682108,GOMOH SAVE CENTRE,SHYAM KUMAR,,G-MEET
+7.0,,AF0402117,MD HASHAMUDDIN,7061168271,GOMOH SAVE CENTRE,SHYAM KUMAR,,G-MEET
+8.0,,AF0408062,Mr. SOUMEN BISWAS,7864859280,WBKSB,Debashis Debnath,Enrollment,G-meet
+9.0,,AF0407462,Abdul Amin Shaikh,9933862254,WBKSB,Aindrila Naskar,Enrollment,G-meet
+10.0,,AF0407479,Arpita Sinde,9163604785,WBKSB,Aindrila Naskar,Enrollment,G-meet
+11.0,,AF0407511,Piku Dey,8972079734,WBKSB,Debashis Debnath,Enrollment,G-meet
+12.0,,AF0407280,Avinash Shaw,6351224230,WBKSB,Aindrila Naskar,Enrollment,G-meet
+13.0,,AF0407302,David William,6291754330,WBKSB,Debashis Debnath,Enrollment,G-meet
+14.0,,AF0407353,Sumit Paswan,9337395212,WBKSB,Debashis Debnath,Enrollment,G-meet
+15.0,,AF0407683,Samrat Bir,6297640746,WBKSB,Aindrila Naskar,Enrollment,G-meet
+16.0,,AF0408061,Mr Sourav Debnath,9874847417,WBKSB,Aindrila Naskar,Enrollment,G-meet
+17.0,,AF0407229,BEBINA PADHI,8917628285,ODBHA,Jyoti Ranjan Mohanty,Enrollment,G-meet
+18.0,,AF0407294,PRITIKA PUJARI,8260666643,ODBHA,Jyoti Ranjan Mohanty,Enrollment,G-meet
+19.0,,AF0407469,TAPASWINI MALLICK,7847932275,ODBHA,Jyoti Ranjan Mohanty,Enrollment,G-meet
+20.0,,AF0407478,MANOJ NAIK,8917683925,ODBHA,Jyoti Ranjan Mohanty,Enrollment,Call
+21.0,,AF0407813,ASUTOSH PRASAD DIGAL,6371940312,ODBHA,Jyoti Ranjan Mohanty,Enrollment,G-meet
+22.0,,AF0407947,ANKITA SINGH,9330030398,WBAXI,Subhajit Dey,Enrollment,MSG
+23.0,,AF0407331,BARNALI SAMADDAR,8100650758,WBAXI,Subhajit Dey,Enrollment,MSG
+24.0,,AF0412670,Dibyendu Biswas,7449756307,WBAXI,Subhajit Dey,Enrollment,MSG
+25.0,,AF0410973,Isha Barman,8240432830,WBAXI,Subhajit Dey,Enrollment,MSG
+26.0,,AF0410975,Isika Chowdhury,7044460881,WBAXI,Subhajit Dey,Enrollment,MSG
+27.0,,AF0404381,Kunal Das,9875308400,WBAXI,Subhajit Dey,Enrollment,MSG
+28.0,,AF0409764,Mou Paramannya,9875628618,WBAXI,Subhajit Dey,Enrollment,MSG
+29.0,,AF0413008,Mousumi Majumder,9330040195,WBAXI,Subhajit Dey,Enrollment,MSG
+30.0,,AF0406360,PIKU OJHA,7439521426,WBAXI,Subhajit Dey,Enrollment,MSG
+31.0,,AF0411769,PRABIR AICH,9875341443,WBAXI,Subhajit Dey,Enrollment,MSG
+32.0,,AF0404382,Pulak Darji,9330444029,WBAXI,Subhajit Dey,Enrollment,MSG
+33.0,,AF0409233,Rimpa Guha,8972432665,WBAXI,Subhajit Dey,Enrollment,MSG
+34.0,,AF0409763,SANCHAITYA BASU,8583936495,WBAXI,Subhajit Dey,Enrollment,MSG
+35.0,,AF0409216,Sayani Pal,9883062190,WBAXI,Subhajit Dey,Enrollment,MSG
+36.0,,AF0404343,SHARANYA SETT,6291202228,WBAXI,Subhajit Dey,Enrollment,MSG
+37.0,,AF0413069,SOUMIK GHOSH,8777644138,WBAXI,Subhajit Dey,Enrollment,MSG
+38.0,,AF0412810,SOUVIK BASU,9804915564,WBAXI,Subhajit Dey,Enrollment,MSG
+39.0,,AF0411478,Sudip Dey,7059872237,WBAXI,Subhajit Dey,Enrollment,MSG
+40.0,,AF0403853,SUPARNA RAJBANSHI,9748256014,WBAXI,Subhajit Dey,Enrollment,MSG
+41.0,,AF0413007,Tania Ojha,9330305688,WBAXI,Subhajit Dey,Enrollment,MSG
+42.0,,AF0341493,Manisha Kumari,9304927621,TATISILWAI,Mangal kumar,Placement not working,call
+43.0,,AF0307112,Manju Mahali,9798066676,TATISILWAI,Mangal kumar,Placement not working,G-meet
+44.0,,AF0311741,Sanjivni Kumari,7667852328,TATISILWAI,Mangal kumar,Placement not working,call
+45.0,,AF0348402,Soni Kumari,6204756778,TATISILWAI,Mangal kumar,Placement not working,call
+46.0,,AF0316998,RUPESH KUMAR MANNA,6203245401,Jamshedpur,Shyam Kumar,Placement not working,Call
+47.0,,AF0321307,AMRIT TANTUBAI,6202246455,Jamshedpur,Shyam Kumar,Placement not working,Call
+48.0,,AF0351990,KESAR KALUNDIA,8789767763,Jamshedpur,Shyam Kumar,Placement not working,Call
+49.0,,AF0352863,PRIYANKA SOREN,6204666824,Jamshedpur,Shyam Kumar,Placement not working,Call
+50.0,,AF0353311,KAJAL SINGH,9065357875,Jamshedpur,Shyam Kumar,Placement not working,Call
+51.0,,AF0312062,Kanchan Pramanik,8252157846,Jamshedpur,Shyam Kumar,Placement not working,Call
+52.0,,AF0332321,KIRAN KUMARI,8789237407,Jamshedpur,Shyam Kumar,Placement not working,Call
+53.0,,AF0336404,RAJAN KUMAR,8294807504,Jamshedpur,Shyam Kumar,Placement not working,Call
+54.0,,AF0341464,Mona Kumari,7808785467,JHAFB,Khushboo Mishra,Placement,Call
+55.0,,AF0329627,Pankaj kumar,6299028618,JHAFB,Khushboo Mishra,Placement,Call
+56.0,,AF0341653,Phalguni Rani,6207242044,JHAFB,Khushboo Mishra,Placement,Call
+57.0,,AF0342438,Reshma Kumari,9546972851,JHAFB,Khushboo Mishra,Placement,Call
+58.0,,AF0339009,SEEMA KUMARI,8235493461,JHAFB,Khushboo Mishra,Placement,Call
+59.0,,AF0340872,Reena kumari,7488498713,JHAFB,Khushboo Mishra,Placement,Call
+60.0,,AF0341669,Pradeep Kumar,6299938476,JHAFB,Khushboo Mishra,Placement,Call
+61.0,,AF0352473,Abburehan Ansari,9263284292,JHAFB,Khushboo Mishra,Placement,Call
+62.0,,AF0349385,kajal kumari,8102361177,JHAFB,Khushboo Mishra,Placement,Call
+63.0,,AF0325585,khushboo Kumari,7542816647,JHBIT,Shamim Ansari,Placement,Call
+64.0,,AF0323101,DEVASHISH YADAV,6202319792,JHBIT,Shamim Ansari,Placement,Call
+65.0,,AF0319095,Binadhar Mahto,6299223289,JHBIT,Shamim Ansari,Placement,Call
+66.0,,AF0342451,IRFAN ANSARI,6203766199,JHBIT,Shamim Ansari,Placement,Call
+67.0,,AF0342912,Sangeeta Murmu,9546731440,JHBIT,Shamim Ansari,Placement,Call
+68.0,,AF0356160,Roshni Nirmohi,6201191710,JHBIT,Shamim Ansari,Placement,Call
+69.0,,AF0356163,Shalini Kumari,9334888474,JHBIT,Shamim Ansari,Placement,Call
+70.0,,AF0372745,MOTAJUL HOQUE,9614851140,WBSSG,Debayan Ghosh,Placement,Call
+71.0,,AF0373389,MASUD. SK,6297955992,WBSSG,Debayan Ghosh,Placement,Call
+72.0,,AF0338265,Beauty Das,7029743947,WBSSI,Debayan Ghosh,Placement,Call
+73.0,,AF0315675,Mithu Das,6295260372,WBKUI,Debayan Ghosh,Placement,Call
+74.0,,AF0315678,Papu Kundu,7479143521,WBKUI,Debayan Ghosh,Placement,Call
+75.0,,AF0315680,Firojbabu Sk,7063839203,WBKUI,Debayan Ghosh,Placement,Call
+76.0,,AF0364605,Chhattu Mondal,8391026845,WBKND,Debayan Ghosh,Placement,Call
+77.0,,AF0364639,Sipra Mondal,8918446991,WBKND,Debayan Ghosh,Placement,Call
+78.0,,AF0366286,Mithun Rajbanshi,7407982779,WBKND,Debayan Ghosh,Placement,Call
+79.0,,AF0364623,Papai Das,9609722041,WBKND,Debayan Ghosh,Placement,Call
+80.0,,AF0363921,Ayesha Sultana,9064431756,WBSSI,Debayan Ghosh,Placement,Call
+81.0,,AF0365677,Hasina Khatun,9134658997,WBSSI,Debayan Ghosh,Placement,Call
+82.0,,AF0367553,Saidul Barak,9382024983,WBSSI,Debayan Ghosh,Placement,Call
+83.0,,AF0369050,Riya Khatun,9832639406,WBSSI,Debayan Ghosh,Placement,Call
+84.0,,AF0371231,Palash Bagdi,9641610635,WBSSI,Debayan Ghosh,Placement,Call
+85.0,,AF0371236,Shukla Kundu,9932586876,WBSSI,Debayan Ghosh,Placement,Call
+86.0,,AF0371239,Kajal Das,9002168372,WBSSI,Debayan Ghosh,Placement,Call
+87.0,,AF0341313,ALAMGIR,8116882441,WBMAN,Debayan Ghosh,Placement,Call
+88.0,,AF0322675,ANJALI,7866984148,WBMAN,Debayan Ghosh,Placement,Call
+89.0,,AF0370654,Priyanka Ghoshchowdhury,7699234383,WBBDS,Debayan Ghosh,Placement,Call
+90.0,,AF0370663,Preeti Maity Roy,9775086672,WBBDS,Debayan Ghosh,Placement,Call
+91.0,,AF0370667,Paresh Chandra Mahata,8372059306,WBBDS,Debayan Ghosh,Placement,Call
+92.0,,AF0370670,Papiya Karmakar,6297228472,WBBDS,Debayan Ghosh,Placement,Call
+93.0,,AF0372660,Polash Chadra Sarkar,8637040848,WBBDS,Debayan Ghosh,Placement,Call
+94.0,,AF0372619,Mr. Mijanur Rahaman Sardar,8910021766,WBBDS,Debayan Ghosh,Placement,Call
+95.0,,AF0329589,Enamul Haque,8918043933,WBMAN,Debayan Ghosh,Placement,Call
+96.0,,AF0306323,RANJIT BAYEN,7029467677,WBNHA,Debayan Ghosh,Placement,Call
+97.0,,AF0306371,RAKESH ROUSON,9563626399,WBNHA,Debayan Ghosh,Placement,Call
+98.0,,AF0373768,SOMALIKA ROY,9875512642,WBBDS,Debayan Ghosh,Placement,Call
+99.0,,AF0373769,SUBHODEEP MONDAL,7890414813,WBBDS,Debayan Ghosh,Placement,Call
+100.0,,AF0373770,RAJDEEP ADHIKARY,7074463538,WBBDS,Debayan Ghosh,Placement,Call
+101.0,,AF0310478,TUFAN MAITY,8348926156,WBJAM,Debayan Ghosh,Placement,Call
+102.0,,AF0333681,MIs.Latifa Khatun,6296981645,WBHNS,Debayan Ghosh,Placement,Call
+103.0,,AF0325913,Babita Saini,9575796613,MPAFK,Manoj Vishwakarma,Placement,Call
+104.0,,AF0336632,Sanjana Bhalavi,9009758144,MPAFK,Manoj Vishwakarma,Placement,Call
+105.0,,AF0341738,Vakash Mandraai,8750657864,MPAFK,Manoj Vishwakarma,Placement,Call
+106.0,,AF0348591,Vijay Singh,6261780602,MPAFK,Manoj Vishwakarma,Placement,Call
+107.0,,AF0348599,Rajanti Kakodiya,7898532981,MPAFK,Manoj Vishwakarma,Placement,Call
+108.0,,AF0352423,Arjune Mansore,9669924244,MPAFK,Manoj Vishwakarma,Placement,Call
+109.0,,AF0352430,Rishiraj Silawat,9770795981,MPAFK,Manoj Vishwakarma,Placement,Call
+110.0,,AF0355235,Mohit rajput,7879071477,MPAFK,Manoj Vishwakarma,Placement,Call
+111.0,,AF0355237,Dipak Korku,6268785962,MPAFK,Manoj Vishwakarma,Placement,Call
+112.0,,AF0355239,Vinod Bhaidiya,9174261058,MPAFK,Manoj Vishwakarma,Placement,Call
+113.0,,AF0331815,Ramkrishna Prajapat,9301806275,MPAFK,Manoj Vishwakarma,Placement,Call
+114.0,,AF0336083,Naina Karma,7722908034,MPAFK,Manoj Vishwakarma,Placement,Call
+115.0,,AF0353090,Shiwani Shriwas,7024427483,MPAFK,Manoj Vishwakarma,Placement,Call
+116.0,,AF0351001,divya rani barnwal,9905916952,JHAFB,Khushboo Mishra,Placement,Call
+117.0,,AF0355190,Nancy Kumari Sinha,8340559897,JHAFB,Khushboo Mishra,Placement,Call
+118.0,,AF0414058,Arifa Khatun,9062361760,WBSOA,ROMIT SAMANTA,Enrollment,Call
+119.0,,AF0413664,ANIMESH GAYEN,9073137842,WBAFN,Sekh Mohammad Hosen,Enrollment,G-meet
+120.0,,AF0413675,AKASH MAJHI,9830729029,WBAFN,Sekh Mohammad Hosen,Enrollment,G-meet
+121.0,,AF0375673,Tanuja Rajput,8591036114,MHITV,Arun Tammannavar,Non Contatable,G-meet
+122.0,,AF0369037,Aman krishna Tiwari,8169442686,MHHDB,Arun Tammannavar,Non Contatable,G-meet
+123.0,,AF0374244,Shruthi Kadam,9372699414,MHITV,Arun Tammannavar,Non Contatable,G-meet
+124.0,,AF0364763,Ayesha Qureshi Moosa,8369923926,MHKBP,Arun Tammannavar,Non Contatable,G-meet
+125.0,,AF0415100,PAPIYA SAMANTA,8293065207,WBITC,CHANCHAL DAS,Enrollment,G-meet
+126.0,,AF0415290,ANUSUYA BACHHAR,8100643153,WBITC,CHANCHAL DAS,Enrollment,G-meet
+127.0,,AF0415106,SK. AKBAR ALI,9609254232,WBITC,CHANCHAL DAS,Enrollment,G-meet
+128.0,,AF0415094,KARTICK MONDAL,8167060881,WBITC,CHANCHAL DAS,Enrollment,G-meet
+129.0,,AF0415603,MANOJIT JANA,8828355722,WBITC,CHANCHAL DAS,Enrollment,G-meet
+130.0,,AF0415089,SUMITA SANTRA,9883480494,WBITC,CHANCHAL DAS,Enrollment,G-meet
+131.0,,AF0415343,PRONAB SANTRA,7872473850,WBITC,CHANCHAL DAS,Enrollment,G-meet
+132.0,,AF0415122,LALTU KHAN,8653100545,WBITC,CHANCHAL DAS,Enrollment,G-meet
+133.0,,AF0416063,SALMA KHATUN,8100311534,WBITC,CHANCHAL DAS,Enrollment,G-meet
+134.0,,AF0374442,SK ROMJAN ALI,9874654297,WBITC,CHANCHAL DAS,Enrollment,G-meet
+135.0,,AF0373401,SHUBHAM JASU,7439660301,WBITC,CHANCHAL DAS,Enrollment,G-meet
+136.0,,AF0416528,HABIBA KHATUN,8250075310,WBITC,CHANCHAL DAS,Enrollment,G-meet
+137.0,,AF0413699,Sumana Ghosh,9735948798,WBSLI,Sourav Bagchi,Enrollment,Call
+138.0,,AF0414464,Kanchan Mondal,9775972018,WBSLI,Sourav Bagchi,Enrollment,Call
+139.0,,AF0414853,Rakia Khatun,7797213924,WBSLI,Sourav Bagchi,Enrollment,Call
+140.0,,AF0414962,Md.Alam Rahaman,8001627316,WBSLI,Sourav Bagchi,Enrollment,Call
+141.0,,AF0415345,Khadirul Sk,8303541628,WBSLI,Sourav Bagchi,Enrollment,Call
+142.0,,AF0416205,Mokirul Sk,9641997204,WBSLI,Sourav Bagchi,Enrollment,Call
+143.0,,AF0416206,Abhijit Biswas,6296809114,WBSLI,Sourav Bagchi,Enrollment,Call
+144.0,,AF0416208,Sukdeb Ghosh,9732650258,WBSLI,Sourav Bagchi,Enrollment,Call
+145.0,,AF0416211,Prangopal Gorai,8918596990,WBSLI,Sourav Bagchi,Enrollment,Call
+146.0,,AF0416207,Subrata Mondal,9749436784,WBSLI,Sourav Bagchi,Enrollment,Call
+147.0,,AF0406232,Chinmayi Moris,7045473232,MHDCY,Hitesh Jain,Placement,Call
+148.0,,AF0406131,Kusnuma Ansari,6290292237,METIABRUZ,Sandipan Mishra,Placement,Call
+149.0,,AF0402734,Arpan Mandal,8599907182,WBSOA,ROMIT SAMANTA,Placement,Call
+150.0,,AF0402731,Subha Pramanik,9748531404,WBSOA,ROMIT SAMANTA,Placement,Call
+151.0,,AF0403017,Rahul Ghosh,8582986551,WBSOA,ROMIT SAMANTA,Enrollment,Call
+152.0,,AF0402944,Jui Debnath,8100611977,WBSOA,ROMIT SAMANTA,Placement,Call
+153.0,,AF0402729,Sudhakshina Ghoshal,9007673154,WBSOA,ROMIT SAMANTA,Placement,Call
+154.0,,AF0402728,Simran Walia,8274088674,WBSOA,ROMIT SAMANTA,Placement,Call
+155.0,,AF0402670,Geetanjali swain,8249703772,ODBAD,Monalisa Moharana,Placement,Call
+156.0,,AF0402576,Sarita Sahoo,7852923278,ODBAD,Monalisa Moharana,Placement,Call
+157.0,,AF0402564,Hara Prasad Hembram,9937405549,ODBAD,Monalisa Moharana,Placement,Call
+158.0,,AF0403094,Milismita Behera,6371433933,ODAXI,Moulinath Sengupta,Placement,Call
+159.0,,AF0403347,Santoshini Behera,7606032294,ODAXI,Moulinath Sengupta,Placement,Call
+160.0,,AF0403388,Jayashree Panda,9114086026,ODAXI,Moulinath Sengupta,Placement,Call
+161.0,,AF0403394,Ankita Rout,7908952063,ODAXI,Moulinath Sengupta,Placement,Call
+162.0,,AF0404179,Sushree Sworupa Beura,8327778417,ODAXI,Moulinath Sengupta,Placement,Call
+163.0,,AF0403463,Monalisa Jena,7064034996,ODAXI,Moulinath Sengupta,Placement,Call
+164.0,,AF0402888,JHUMPA HALDER,8918327571,WBMGH,PALASH PAL,Placement,Call
+165.0,,AF0402880,SRABANI NASKAR,9647546427,WBMGH,PALASH PAL,Placement,Call
+166.0,,AF0402452,ASIF ZAMAN LASKAR,9382010131,WBMGH,PALASH PAL,Placement,Call
+167.0,,AF0402411,ARNAB SARDAR,8597852311,WBMGH,PALASH PAL,Placement,Call
+168.0,,AF0402667,LIZA DAS,7992652348,ODBAD,Monalisa Moharana,Placement,Call
+169.0,,AF0404041,Sushree Tania Jena,7978659541,ODBAD,Monalisa Moharana,Placement,Call
+170.0,,AF0402581,Soubhagya Ranjan Maharana,6371062903,ODBAD,Monalisa Moharana,Placement,Call
+171.0,,AF0185668,PRAVEENKUMAR N,6374362409,TNBNP,S INDHUMATHY,Placement,CALL
+172.0,,AF0175588,MONISHWER ROSHAN B.N,7358606750,TNBNP,S INDHUMATHY,Placement,CALL
+173.0,,AF0261564,KEERTHIVASAN SENGATHIR,8754799864,TNBNP,S INDHUMATHY,Placement,CALL
+174.0,,AF0363565,SWETHA V,9360298827,TNBNP,S INDHUMATHY,Placement,CALL
+175.0,,AF0366175,MEGADHARSHINI V,7708498206,TNBNP,S INDHUMATHY,Placement,CALL
+176.0,,AF0367550,SANTHOSH C,9176244973,TNBNP,S INDHUMATHY,Placement,CALL
+177.0,,AF0367922,Eyarkai priya S,9677144783,TNBNP,S INDHUMATHY,Placement,CALL
+178.0,,AF0370724,BANUSRI B,8148054507,TNBNP,S INDHUMATHY,Placement,CALL
+179.0,,AF0374445,AKILA S,9345174523,TNBNP,S INDHUMATHY,Placement,CALL
+180.0,,AF0357661,TAMILARASAN S,7397287742,TNBNP,S INDHUMATHY,Placement,CALL
+181.0,,AF0365653,SOWMIYA R,9940227467,TNBNP,S INDHUMATHY,Placement,CALL
+182.0,,AF0367546,KAVIYANJALI M,7305282405,TNBNP,S INDHUMATHY,Placement,CALL
+183.0,,AF0367829,KARNAN K,8148007599,TNBNP,S INDHUMATHY,Placement,CALL
+184.0,,AF0369323,DHIVYA P,9597242133,TNBNP,S INDHUMATHY,Placement,CALL
+185.0,,AF0356619,AGALYA G,9710574664,TNBNP,S INDHUMATHY,Placement,CALL
+186.0,,AF0369857,BARATH KUMAR A,6381881632,TNBNP,S INDHUMATHY,Placement,CALL
+187.0,,AF0365942,DINESH V,7708185984,TNBNP,S INDHUMATHY,Placement,CALL
+188.0,,AF0365261,ARAVINDHAN B,9360259030,TNBNP,S INDHUMATHY,Placement,CALL
+189.0,,AF0366882,REVATHI S,7397345910,TNBNP,S INDHUMATHY,Placement,CALL
+190.0,,AF0374123,PUSHPALATHA R,9043507471,TNBNP,S INDHUMATHY,Placement,CALL
+191.0,,AF0378109,SARANYA K R,9043498739,TNBNP,S INDHUMATHY,Placement,CALL
+192.0,,AF0400537,NEELKAMAL MAHTO,7257881516,Tatisilwai,Mangal kumar,Placement,Call
+193.0,,AF0401833,Naman Kumar Mahto,7677141548,Tatisilwai,Mangal kumar,Placement,G-Meet
+194.0,,AF0401834,Shashiraj Kumar Mahto,8521585491,Tatisilwai,Mangal kumar,Placement,Call
+195.0,,AF0401925,Sulendra Lohra,8603189542,Tatisilwai,Mangal kumar,Placement,Call
+196.0,,AF0373175,Santoshi Mahto,7903174440,Tatisilwai,Mangal kumar,Placement,Call
+197.0,,AF0373256,Aditya Vishwakarma,8877026876,Tatisilwai,Mangal kumar,Placement,Call
+198.0,,AF0387644,SANGITA KUMARI,6202219275,Tatisilwai,Mangal kumar,Placement,Call
+199.0,,AF0400230,Mahendra Hajam,9334694748,Tatisilwai,Mangal kumar,Placement,Call
+200.0,,AF0400491,Khushi Sahu,7979771290,Tatisilwai,Mangal kumar,Placement,Call
+201.0,,AF0400927,Shashi Karmali,9523989605,Tatisilwai,Mangal kumar,Placement,Call
+202.0,,AF0373196,Ratan Aditya,8102321673,Tatisilwai,Mangal kumar,Placement,Call
+203.0,,AF0376501,Anisha Kachhap,7079606383,Tatisilwai,Mangal kumar,Placement,Call
+204.0,,AF0376503,Mariam Bari,7654810837,Tatisilwai,Mangal kumar,Placement,Call
+205.0,,AF0401190,SUMIT KUMAR,8210876790,JHRAM,VIPUL KUMAR,Placement,Call
+206.0,,AF0424781,Sk. Tipu Sultan,7001212369,WBKND,Sourav Bagchi,Enrollment,Call
+207.0,,AF0421333,Soumen Adhikari,7407752482,WBKND,Sourav Bagchi,Enrollment,Call
+208.0,,AF0423575,Md. Aziz Sekh,9775346857,WBKND,Sourav Bagchi,Enrollment,Call
+209.0,,AF0428959,Sayantan Mistri,9932986625,WBSLI,Sourav Bagchi,Enrollment,Call
+210.0,,AF0429790,Srimanta Ghosh,9113562795,WBSLI,Sourav Bagchi,Enrollment,Call
+211.0,,AF0429801,Pomi Mandal GHOSH,6290441218,WBSLI,Sourav Bagchi,Enrollment,Call
+212.0,,AF0429807,Sagar Mondal,7001090670,WBSLI,Sourav Bagchi,Enrollment,Call
+213.0,,AF0427244,Mithu Das,9564736109,WBAND,Subrata Bagdi,Enrollment,call
+214.0,,AF0427270,Kabirul Sk,9833619254,WBAND,Subrata Bagdi,Enrollment,Call
+215.0,,AF0387785,Pratima kumari,8271688069,ORMANJHI,Pramod Singh,Placement,Call
+216.0,,AF0387797,Abhimanyu Kumar,7479723621,ORMANJHI,Pramod Singh,Placement,Call
+217.0,,AF0401986,Anil Kumar,7250098973,ORMANJHI,Pramod Singh,Placement,Call
+218.0,,AF0401995,Reshami Oraon,7485874531,ORMANJHI,Pramod Singh,Placement,Call
+219.0,,AF0404678,MUZAMIL AHAD,7780838180,JKAXI,Savinder Singh,Enrollment,Call
+220.0,,AF0405184,Danish Rasool Lone,6006795047,JKAXI,Savinder Singh,Enrollment,Call
+221.0,,AF0404914,Asiya Shafi,7006195752,JKAXI,Savinder Singh,Enrollment,Call
+222.0,,AF0407707,IMRAN RASHID,9541641827,JKAXI,Savinder Singh,Enrollment,Call
+223.0,,AF0403525,Tanishka .,9899485831,UPAXI,Tanaaz khan,Placement,Call
+224.0,,AF0403565,Karan kumar,8745026960,UPAXI,Tanaaz khan,Placement,Call
+225.0,,AF0403874,Kehkasha .,9350387161,UPAXI,Tanaaz khan,Placement,Call
+226.0,,AF0403736,Shivani Singh,8377040116,UPAXI,Tanaaz khan,Placement,Call
+227.0,,AF0403860,Farheen .,9354723609,UPAXI,Tanaaz khan,Placement,Call
+228.0,,AF0403871,Nancy .,8802964417,UPAXI,Tanaaz khan,Placement,Call
+229.0,,AF0403969,Sakshi .,9711428329,UPAXI,Tanaaz khan,Placement,Call
+230.0,,AF0403772,Manshi .,8595067076,UPAXI,Tanaaz khan,Placement,Call
+231.0,,AF0402878,PRITILATA MANNA,9775027733,WBMGH,PALASH PAL,Placement,Call
+232.0,,AF0404432,SAHID LASKAR,7384079431,WBMGH,PALASH PAL,Placement,Call
+233.0,,AF0405419,TAMANNA KHATUN,6294514843,WBMGH,PALASH PAL,Placement,Call
+234.0,,AF0402418,PROBHAT MALIK,8653168352,WBMGH,PALASH PAL,Placement,Call
+235.0,,AF0404875,JOITA HAZRA,7501716781,WBMGH,PALASH PAL,Placement,Call
+236.0,,AF0413838,SUPARNA BISWAS,9563544117,WBMGH,PALASH PAL,Placement,Call
+237.0,,AF0404851,SURAJ LASKAR,7047493995,WBMGH,PALASH PAL,Placement,Call
+238.0,,AF0407503,FARHANA KHATUN,8961330765,WBMGH,PALASH PAL,Placement,Call
+239.0,,AF0413485,RIMPA DAS,7872869909,WBMGH,PALASH PAL,Placement,Call
+240.0,,AF0404951,Amit Kumar Singh,8375826539,HRGSH,Anupam Kumar,Placement,Call
+241.0,,AF0402657,Mr Param,9910317264,HRGUB,Anupam Kumar,Placement,Call
+242.0,,AF0408718,Ms. Sabnam Jenifar Jafrin,9064921744,HRGSH,Anupam Kumar,Placement,Call
+243.0,,AF0402886,Ms. Garima,9643619668,HRGUB,Anupam Kumar,Placement,Call
+244.0,,AF0404199,Priya Kumari,9334937212,Tatisilwai,Mangal kumar,Placement,Call
+245.0,,AF0404654,ANKUSH KUMAR,7903109164,Tatisilwai,Mangal kumar,Placement,Call
+246.0,,AF0403594,Geeta Kumari,7004595626,Tatisilwai,Mangal kumar,Placement,Call
+247.0,,AF0405005,Sandhya Pramanik,7063020684,WBARK,Bimal Kar,Placement,Call
+248.0,,AF0405007,Ananya Mondal,8373822671,WBARK,Bimal Kar,Placement,Call
+249.0,,AF0405662,Subhajit Adak,7679824525,WBARK,Bimal Kar,Placement,Call
+250.0,,AF0406951,Payel Mandal,9749726701,WBSOA,ROMIT SAMANTA,Placement,Call
+251.0,,AF0406173,JOGOMAYA DAS,9593824842,WBSOA,ROMIT SAMANTA,Placement,Call
+252.0,,AF0403009,ARINDAM MANDAL,6289996220,WBSOA,ROMIT SAMANTA,Placement,Call
+253.0,,AF0411637,Mr. Basudev Mondal,6296437815,WBSOA,ROMIT SAMANTA,Placement,Call
+254.0,,AF0403804,Simran .,9136466922,UPAXI,TANAAZ KHAN,PLACEMENT,CALL
+255.0,,AF0403403,Karishma .,9310654214,UPAXI,TANAAZ KHAN,PLACEMENT,CALL
+256.0,,AF0403577,Aashi .,9999682360,UPAXI,TANAAZ KHAN,PLACEMENT,CALL
+257.0,,AF0403807,Saloni Kumari Pandey,8882828041,UPAXI,TANAAZ KHAN,PLACEMENT,CALL
+258.0,,AF0404171,Radha .,8447690736,UPAXI,TANAAZ KHAN,PLACEMENT,CALL
+259.0,,AF0403857,AASHA .,8287569195,UPAXI,TANAAZ KHAN,PLACEMENT,CALL
+260.0,,AF0403544,Shweta .,8700109674,UPAXI,TANAAZ KHAN,PLACEMENT,CALL
+261.0,,AF0403970,kajal verma,9953694359,UPAXI,TANAAZ KHAN,PLACEMENT,CALL
+262.0,,AF0403803,Princi .,8287824229,UPAXI,TANAAZ KHAN,PLACEMENT,CALL
+263.0,,AF0403810,Poonam .,9718512507,UPAXI,TANAAZ KHAN,PLACEMENT,CALL
+264.0,,AF0408502,Gurnoor Kaur,8968896379,ANUDIP FOUNDATION FOR SOCIAL WELFARE -- BIPANJEET KAUR-- CHANDIGARH--AXIS BANK FOUNDATION,Narpender Singh,Placement,Call
+265.0,,AF0408509,Ms. Rupali,7355323414,ANUDIP FOUNDATION FOR SOCIAL WELFARE -- BIPANJEET KAUR-- CHANDIGARH--AXIS BANK FOUNDATION,Narpender Singh,Placement,Call
+266.0,,AF0407848,Neha Kumari,9616543864,ANUDIP FOUNDATION FOR SOCIAL WELFARE -- BIPANJEET KAUR-- CHANDIGARH--AXIS BANK FOUNDATION,Narpender Singh,Placement,Call
+267.0,,AF0392554,Mehak,8287594632,DLMNI,Faizul Hasan,Placement,G-meet
+268.0,,AF0402062,Rakhee,9773554998,HRNIT,Faizul Hasan,Placement,G-meet
+269.0,,AF0402056,Shivani,7895780597,HRNIT,Faizul Hasan,Placement,G-meet
+270.0,,AF0402049,Dhanendri,9625343139,HRNIT,Faizul Hasan,Placement,G-meet
+271.0,,AF0401703,Ayesha Fatima,9311243602,HRNIT,Faizul Hasan,Placement,G-meet
+272.0,,AF0409787,Ruchika Rani das,9871283332,DLUTS,Faizul Hasan,Placement,G-meet
+273.0,,AF0414549,Prachi,9971279137,DLUTS,Faizul Hasan,Placement,G-meet
+274.0,,AF0389742,Gazala Tabbasum,7303021176,DLMNI,Faizul Hasan,Placement,G-meet
+275.0,,AF0392784,Aman Mishra,9899627630,DLMNI,Faizul Hasan,Placement,G-meet
+276.0,,AF0392867,Abhishek Kumar,9873913499,DLMNI,Faizul Hasan,Placement,G-meet
+277.0,,AF0405988,JAMIRUDDIN SARDAR,7063664448,Diamond Harbour-WBRCD,Santanu Pal,Placement,G-meet
+278.0,,AF0411526,MASUM PAIK,8609367298,Diamond Harbour-WBRCD,Santanu Pal,Placement,G-meet
+279.0,,AF0411830,SUDIPTA MAKHAL,9932496548,Diamond Harbour-WBRCD,Santanu Pal,Placement,G-meet
+280.0,,AF0404366,CHAMPA SARDAR,9002907548,Diamond Harbour-WBRCD,Santanu Pal,Placement,G-meet
+281.0,,AF0407209,NADU HARIJAN,6370617363,ODBHA,Jyoti Ranjan Mohanty,Placement,Call
+282.0,,AF0408422,Javed,8810345977,DLUTS,Faizul Hasan,Placement,Call
+283.0,,AF0408418,Zameer Ashraf,7678518987,DLUTS,Faizul Hasan,Placement,Call
+284.0,,AF0415087,Ankita Patwal,9560862113,DLUTS,Faizul Hasan,Placement,Call
+285.0,,AF0408855,Komal Mishra,9582485966,DLUTS,Faizul Hasan,Placement,Call
+286.0,,AF0376890,Muskan,8800383921,DLUTS,Faizul Hasan,Placement,Call
+287.0,,AF0377592,Ritu,9319138386,DLUTS,Faizul Hasan,Placement,Call
+288.0,,AF0384662,Anish Kumar,9625676206,DLUTS,Faizul Hasan,Placement,Call
+289.0,,AF0377016,Rajendra Singh Bisht,6395913686,DLUTS,Faizul Hasan,Placement,Call
+290.0,,AF0383931,Tamanna,9289438842,DLUTS,Faizul Hasan,Placement,Call
+291.0,,AF0382127,Saniya Massey,8595735842,DLUTS,Faizul Hasan,Placement,Call
+292.0,,AF0405595,Ms Aashu,8448154354,DLENY,Faizul Hasan,Placement,Call
+293.0,,AF0389727,Radhika Chauhan,8178292397,DLMNI,Faizul Hasan,Placement,Call
+294.0,,AF0389738,Harshita,8384011480,DLMNI,Faizul Hasan,Placement,Call
+295.0,,AF0404661,Versha Garag,9205319767,DLUTS,Faizul Hasan,Placement,Call
+296.0,,AF0405015,Isha Kumari,8700597918,DLUTS,Faizul Hasan,Placement,Call
+297.0,,AF0415085,Pinki kuamri,9711764496,DLUTS,Faizul Hasan,Placement,Call
+298.0,,AF0406171,Shankar Yadav,7779956350,DLUTS,Faizul Hasan,Placement,Call
+300.0,,AF0383993,Ekta Kumari,7827817929,DLUTS,Faizul Hasan,Placement,Call
+303.0,,AF0382132,Preeti Kumari,8587889759,DLUTS,Faizul Hasan,Placement,Call
+316.0,,AF0401823,Nisha Kumari,7644009834,BRAXI,Sunil Kumar Sah,Placement,Call
+317.0,,AF0401933,Shashi Kumar,7564023987,BRAXI,Sunil Kumar Sah,Placement,Call
+318.0,,AF0403506,Muskan Kumari,8340763204,BRAXI,Sunil Kumar Sah,Placement,Call
+319.0,,AF0404422,Sanoj Kumar,8757227234,BRAXI,Sunil Kumar Sah,Placement,Call
+320.0,,AF0409201,Anshu Kumari,7004571169,BRAXI,Sunil Kumar Sah,Placement,Call
+321.0,,AF0413416,Shubham Kumar,6201902669,BRAXI,Sunil Kumar Sah,Placement,Call
+322.0,,AF0414093,Abha Kumari,8709334947,BRAXI,Sunil Kumar Sah,Placement,Call
+323.0,,AF0400926,PRIYANKA,9873815267,HRNIT,Faizul Hasan,Placement,Call
+324.0,,AF0376943,Manisha,7701963077,DLUTS,Faizul Hasan,Placement,Call
+325.0,,AF0382133,Akriti Mishra,9953851853,DLUTS,Faizul Hasan,Placement,Call
+326.0,,AF0382136,Jai Kishan Yadav,9582994270,DLUTS,Faizul Hasan,Placement,Call
+327.0,,AF0382140,Pardeep Pangeni,8920522993,DLUTS,Faizul Hasan,Placement,Call
+328.0,,AF0382214,Rachit .,9971484526,DLUTS,Faizul Hasan,Placement,Call
+335.0,,AF0373189,Suraj kumar Sharma,7547085071,Tatisilwai,Mangal Kumar,Placement,Call
+336.0,,AF0373191,Ankit Raj,6299569082,Tatisilwai,Mangal Kumar,Placement,Call
+337.0,,AF0373173,BANTI MUNDA,7295881080,Tatisilwai,Mangal Kumar,Placement,Call
+338.0,,AF0373365,Sahil Ansari,7739099419,Tatisilwai,Mangal Kumar,Placement,Call
+339.0,,AF0373148,Veena Kumari,6201028563,Tatisilwai,Mangal Kumar,Placement,Call
+340.0,,AF0404018,RISHITA KUMARI,9162031979,Tatisilwai,Mangal Kumar,Placement,Call
+341.0,,AF0425722,Puja Kumari,6204473849,Tatisilwai,Mangal Kumar,Placement,Call
+342.0,,AF0417039,MASUD RAHAMAN JAMADAR,6296003233,WBMGH,PALASH PAL,Placement,Call
+343.0,,AF0402597,POOJA SANTRA,9820877062,Dhulagrah,Prasanta Dhara,Placement,Call
+344.0,,AF0407312,SANTANU NASKAR,8017219221,Dhulagrah,Prasanta Dhara,Placement,Call
+345.0,,AF0407501,Irfan Khan,6290183313,Dhulagrah,Prasanta Dhara,Placement,Call
+346.0,,AF0411155,SUBHODIP CHOWDHURY,8240830598,Dhulagrah,Prasanta Dhara,Placement,Call
+347.0,,AF0411162,MANISHA PATRA,9330060170,Dhulagrah,Prasanta Dhara,Placement,Call
+348.0,,AF0411163,PALLABI GIRI,6289888248,Dhulagrah,Prasanta Dhara,Placement,Call
+349.0,,AF0411538,UMME KULSUM,9330109202,Dhulagrah,Prasanta Dhara,Placement,Call
+350.0,,AF0414219,AARTI KUMARI GUPTA,8100082733,Dhulagrah,Prasanta Dhara,Placement,Call
+351.0,,AF0413698,RIMPA SANTRA,9330761701,Dhulagrah,Prasanta Dhara,Placement,Call
+352.0,,AF0418709,BAISAKHI KARMAKAR,8420300409,Dhulagrah,Prasanta Dhara,Placement,Call
+353.0,,AF0412022,ANUPAMA FOUZDER,8653419440,WBULU,Krishnendu Chakraborty,Placement,Call
+354.0,,AF0416798,KOUSHIKI CHATTERJEE,7908204218,WBULU,Krishnendu Chakraborty,Placement,Call
+364.0,,AF0376920,Kasak,8368724789,DLUTS,Faizul Hasan,Placement,Call
+365.0,,AF0376922,Palak Gupta,9910712101,DLUTS,Faizul Hasan,Placement,Call
+367.0,,AF0377023,Shrishti,9205235556,DLUTS,Faizul Hasan,Placement,Call
+368.0,,AF0377389,Shubham,9811324136,DLUTS,Faizul Hasan,Placement,Call
+369.0,,AF0382225,Somya Kumari,9289788087,DLUTS,Faizul Hasan,Placement,Call
+370.0,,AF0382151,Jiya,7982535831,DLUTS,Faizul Hasan,Placement,Call
+371.0,,AF0382177,Bharat,8130710448,DLUTS,Faizul Hasan,Placement,Call
+375.0,,AF0418712,ARPAN SINGH,9123689701,Dhulagrah,Prasanta Dhara,Placement,Call
+376.0,,AF0402580,SMRUTI RANJAN PRADHAN,8249741704,ODACC,Anil Kumar Pradhan,Placement,Call
+377.0,,AF0403368,MILU BEHERA,6370214160,ODACC,Anil Kumar Pradhan,Placement,Call
+378.0,,AF0407608,JAYASHREE BEHERA,7815056593,ODACC,Anil Kumar Pradhan,Placement,Call
+379.0,,AF0407758,SIMON DAS,6371296835,ODACC,Anil Kumar Pradhan,Placement,Call
+380.0,,AF0408882,BIJAYALAXMI NAYAK,8328851617,ODACC,Anil Kumar Pradhan,Placement,Call
+381.0,,AF0407606,SALMA PARWIN,7894936996,ODACC,Anil Kumar Pradhan,Placement,Call
+382.0,,AF0407598,DIPTIRANI MOHANTY,9692663940,ODACC,Anil Kumar Pradhan,Placement,Call
+383.0,,AF0408413,ZEENAT ARA BEGUM,9861017309,ODACC,Anil Kumar Pradhan,Placement,Call
+384.0,,AF0418748,LAXMI PRIYA MAJHI,9832577703,ODACC,Anil Kumar Pradhan,Placement,Call
+385.0,,AF0408887,SOUMEN BHOWMICK,9635767493,WBULU,Krishnendu Chakraborty,Placement,Call
+386.0,,AF0415812,Ms Bhawna,9466942371,DLRHL,Faizul Hasan,Placement,Call
+387.0,,AF0415857,Princi Saini,8295601078,DLRHL,Faizul Hasan,Placement,Call
+388.0,,AF0416717,Kirti,9817119198,DLRHL,Faizul Hasan,Placement,Call
+389.0,,AF0417145,Mansi,7300783090,DLRHL,Faizul Hasan,Placement,Call
+390.0,,AF0417169,Varsha,8053804958,DLRHL,Faizul Hasan,Placement,Call
+391.0,,AF0417509,Ms Himanshi,9588301365,DLRHL,Faizul Hasan,Placement,Call
+392.0,,AF0417513,Muskan Kumari,8708141526,DLRHL,Faizul Hasan,Placement,Call
+393.0,,AF0417551,Ms Shruti,8168523566,DLRHL,Faizul Hasan,Placement,Call
+394.0,,AF0417593,Nancy Dahiya,7404393239,DLRHL,Faizul Hasan,Placement,Call
+395.0,,AF0417604,Monika,8168246960,DLRHL,Faizul Hasan,Placement,Call
+396.0,,AF0417606,Kavita Kumari,9812184153,DLRHL,Faizul Hasan,Placement,Call
+397.0,,AF0417627,Ms Konika,8950257921,DLRHL,Faizul Hasan,Placement,Call
+398.0,,AF0417608,Vanshika,7027388836,DLRHL,Faizul Hasan,Placement,Call
+399.0,,AF0417612,Ms Dimple,9671911208,DLRHL,Faizul Hasan,Placement,Call
+400.0,,AF0417704,Ms Mehak,8607167400,DLRHL,Faizul Hasan,Placement,Call
+401.0,,AF0417598,Tamanna,8572004346,DLRHL,Faizul Hasan,Placement,Call
+402.0,,AF0417171,Ms Ayushi,9034424328,DLRHL,Faizul Hasan,Placement,Call
+403.0,,AF0417617,Payal,7056004646,DLRHL,Faizul Hasan,Placement,Call
+404.0,,AF0415817,Ms Saniya,9350512960,DLRHL,Faizul Hasan,Placement,Call
+405.0,,AF0417140,Khushi,9991466977,DLRHL,Faizul Hasan,Placement,Call
+406.0,,AF0417708,Palak Tyagi,8307546134,DLRHL,Faizul Hasan,Placement,Call
+407.0,,AF0427454,RUMPA DAS,8145073796,WBMGH,PALASH PAL,Placement,Call (12.30pm to 1pm)
+408.0,,AF0412272,RAKIBUL MOLLA,7029369930,WBMGH,PALASH PAL,Placement,Call
+409.0,,AF0417019,TOBUSUM KHATUN,8509956147,WBMGH,PALASH PAL,Placement,Call (1pm to 2pm)
+410.0,,AF0417034,DIPA HALDER,7866056513,WBMGH,PALASH PAL,Placement,Call
+411.0,,AF0416993,PRIOSHREE HALDER,9883762235,WBMGH,PALASH PAL,Placement,Call
+412.0,,AF0426015,LIBIYA KHATUN,7583961676,WBMGH,PALASH PAL,Placement,Call
+413.0,,AF0427293,SONIYA HALDER,8372982369,WBMGH,PALASH PAL,Placement,Call
+414.0,,AF0428481,DEBIKA MONDAL,9038590503,WBMGH,PALASH PAL,Placement,Call
+415.0,,AF0406194,Deevya Phutane,8779598961,MHDCY,Hitesh Jain,Placement,Call
+416.0,,AF0406291,Rajlaxmi Tikare,9324494298,MHDCY,Hitesh Jain,Placement,Call
+417.0,,AF0407672,Gauravi Desai,9137108434,MHDCY,Hitesh Jain,Placement,Call
+418.0,,AF0412293,Krutik Nandkumar Datir,8433584803,MHDCY,Hitesh Jain,Placement,Call
+419.0,,AF0407641,Sanjyot Chavan,8928463664,MHDCY,Hitesh Jain,Placement,Call
+420.0,,AF0407751,Siddhi Palande,9152971729,MHDCY,Hitesh Jain,Placement,Call
+421.0,,AF0412286,Vaishnavi Nivrutti Thukarul,9321435594,MHDCY,Hitesh Jain,Placement,Call
+422.0,,AF0411898,SANIKA DILIP GAWADE,9773120127,MHDCY,Hitesh Jain,Placement,Call
+423.0,,AF0412371,Vaiju Anil Chalke,7700022360,MHDCY,Hitesh Jain,Placement,Call
+424.0,,AF0424941,Arpita Ajay Mundekar,9967837298,MHDCY,Hitesh Jain,Placement,Call
+425.0,,AF0424486,Aditya Rane,9869975488,MHDCY,Hitesh Jain,Placement,Call
+426.0,,AF0401189,Priyanshu Kumar,9835881798,JHRAM,VIPUL KUMAR,Placement,Call
+427.0,,AF0404317,Kavita Kumari,8651014491,JHRAM,VIPUL KUMAR,Placement,Call
+428.0,,AF0404994,BHAIRAVI MANSATA,9334418005,JHRAM,VIPUL KUMAR,Enrollment,Call
+429.0,,AF0407600,Sweta Kumari,8340214345,JHRAM,VIPUL KUMAR,Placement,Call
+430.0,,AF0419415,Monika Kumari,6201182024,JHRAM,VIPUL KUMAR,Placement,Call
+431.0,,AF0422849,Shivam kumar Thakur,9798564413,JHRAM,VIPUL KUMAR,Placement,Call
+432.0,,AF0407605,Gudiya Kumari,9835262857,JHRAM,VIPUL KUMAR,Placement,Call
+433.0,,AF0413576,Sheetal Kumari,6200040667,JHRAM,VIPUL KUMAR,Enrollment,Call
+434.0,,AF0413595,Aditi Upadhyaya,9631537188,JHRAM,VIPUL KUMAR,Placement,Call
+435.0,,AF0419412,Kreena Gousia,7857884018,JHRAM,VIPUL KUMAR,Placement,Call
+436.0,,AF0402089,Krisha Debnath,9123999636,WBBAR,Mou Santra,Placement,Call
+437.0,,AF0415474,PURNIMA SAHA,6294659354,WBBAR,Mou Santra,Placement,Call
+438.0,,AF0410361,RIMPI DEBNATH,9933949460,WBBAR,Mou Santra,Placement,Call
+439.0,,AF0430441,Snaha Biswas,8013530220,WBBAR,Mou Santra,Placement,Call
+440.0,,AF0434770,Atrayee Biswas,9382636366,WBBAR,Mou Santra,Placement,Call
+441.0,,AF0438160,Udit Banik,8697615418,WBBAR,Mou Santra,Placement,Call
+442.0,,AF0401985,khushi kumari,9279699354,JHAFO,Pramod singh,Placement,Calling
+443.0,,AF0403951,Rajkishor Mahto,8252627373,JHAFO,Pramod singh,Placement,Calling
+444.0,,AF0383619,Suraj Kumar,8809432959,JHAFO,Pramod singh,Placement,Calling
+445.0,,AF0410750,Puja Kumari,6204213166,JHAFO,Pramod singh,Placement,Calling
+446.0,,AF0410748,Pranav Kumar,7765917747,JHAFO,Pramod singh,Placement,Calling
+447.0,,AF0404476,Ravina Kumari,9263145283,JHAFO,Pramod singh,Placement,Calling
+448.0,,AF0407541,Anshu Singh,7644016863,JHAFO,Pramod singh,Placement,Calling
+449.0,,AF0407653,Sapna kumari,8521360511,JHAFO,Pramod singh,Placement,Calling
+450.0,,AF0407656,Nandani Kumari,9065171991,JHAFO,Pramod singh,Placement,Calling
+451.0,,AF0407536,Santosh Kumar,6206737241,JHAFO,Pramod singh,Placement,Calling
+452.0,,AF0411148,Pawan Kumar,9631579539,JHAFO,Pramod singh,Placement,Calling
+453.0,,AF0411249,Ragini Kumari,9709377475,JHAFO,Pramod singh,Placement,Calling
+454.0,,AF0410706,Anjali Kumari,9031264153,JHAFO,Pramod singh,Placement,Calling
+455.0,,AF0417418,Savitri Kumari,6201435362,JHAFO,Pramod singh,Placement,Calling
+456.0,,AF0417093,Tanu Kumari,7667014536,JHAFO,Pramod singh,Placement,Calling
+457.0,,AF0417138,Md jawed Ansari,6201524639,JHAFO,Pramod singh,Placement,Calling
+458.0,,AF0424158,Vikash Munda,9297835833,JHAFO,Pramod singh,Placement,Calling
+459.0,,AF0424566,PUSHPA KUMARI,6204092596,JHAFO,Pramod singh,Placement,Calling
+460.0,,AF0424658,ABHISHEK KUMAR,9523319054,JHAFO,Pramod singh,Placement,Calling
+461.0,,AF0404256,Vandana Singh,8252441775,JHAFO,Pramod singh,Placement,Calling
+462.0,,AF0401992,Nigah Parween,9241744586,JHAFO,Pramod singh,Placement,Calling
+463.0,,AF0424147,Resham Afrin,9693748407,JHAFO,Pramod singh,Placement,Calling
+464.0,,AF0424171,Nitin Kumar,8630709104,JHAFO,Pramod singh,Placement,Calling
+465.0,,AF0424395,Shekhar Karmali,9334013753,JHAFO,Pramod singh,Placement,Calling
+466.0,,AF0414176,MOLY MONDAL,9083457203,WBBAR,Mou Santra,Placement,Call
+467.0,,AF0415462,ANIMESH ROY,9641187989,WBBAR,Mou Santra,Placement,Call
+468.0,,AF0447441,FARHANA YEASMIN,7719201769,WBBAR,Mou Santra,Placement,Call
+469.0,,AF0458782,DIPANKAR SHIL,8653553567,ANUDIP FOUNDATION FOR SOCIAL WELFARE--Cooch Behar,Siddhartha Roy,Enrollment,Call
+470.0,,AF0413600,Sharwan Kumar,8229023415,JHAFT,Mangal kumar,Placement,Call
+471.0,,AF0410885,Chandni Kumari,9241401892,JHAFT,Mangal kumar,Placement,Call
+472.0,,AF0417352,Tushar Kumar,9508360338,JHAFT,Mangal kumar,Placement,Call
+473.0,,AF0409792,RAMIZ RAJA KHAN,8436665821,Diamind Harbour (WBRCD),Santanu Pal,Placement,Call
+474.0,,AF0407325,Arti Kumari,8541964574,BRAXI,Sunil Kumar Sah,Placement,Call
+475.0,,AF0407709,Ravi Kumar,9304949421,BRAXI,Sunil Kumar Sah,Placement,Call
+476.0,,AF0408776,Vivek Kumar,9798525681,BRAXI,Sunil Kumar Sah,Placement,Call
+477.0,,AF0424120,Anisha Bharti,9934170057,BRAXI,Sunil Kumar Sah,Placement,Call
+478.0,,AF0424122,Shivani Kumari,9162387821,BRAXI,Sunil Kumar Sah,Placement,Call
+479.0,,AF0429245,Manoranjan Kumar,6204005338,BRAXI,Sunil Kumar Sah,Placement,Call
+480.0,,AF0424112,Chandan Kumar,8077228384,BRAXI,Sunil Kumar Sah,Placement,Call
+481.0,,AF0429227,Arti Murmu,8757261664,BRAXI,Sunil Kumar Sah,Placement,Call
+482.0,,AF0433148,AVINASH KUMAR,6200170243,BRAXI,Sunil Kumar Sah,Placement,Call
+483.0,,AF0441896,Tanisha Kumari,6299381224,BRAXI,Sunil Kumar Sah,Placement,Call
+484.0,,AF0441904,Mahi Raj,9205068808,BRAXI,Sunil Kumar Sah,Placement,Call
+485.0,,AF0441966,Anuj Kumar,9199722062,BRAXI,Sunil Kumar Sah,Placement,Call
+486.0,,AF0418779,Pushpa Kumari,8210801678,BRAXI,Sunil Kumar Sah,Placement,Call
+487.0,,AF0439869,Joyti Kumari,7070878528,BRAXI,Sunil Kumar Sah,Placement,Call
+488.0,,AF0445723,Tannu Singh,6206600851,BRAXI,Sunil Kumar Sah,Placement,Call
+489.0,,AF0446460,Golu Kumar,6202750009,BRAXI,Sunil Kumar Sah,Placement,Call
+490.0,,AF0373180,Anjali Bhutkumar,9304852349,JHAFT,Mangal kumar,Placement,Call
+491.0,,AF0404110,Nikita Kumari Mirdha,8252156415,JHAFT,Mangal kumar,Placement,Call
+492.0,,AF0404112,Shubham Nayak,6207864623,JHAFT,Mangal kumar,Placement,Call
+493.0,,AF0404378,Bikky Oraon,9234755224,JHAFT,Mangal kumar,Placement,Call
+494.0,,AF0407112,Amit Prajapati,9572163408,JHAFT,Mangal kumar,Placement,Call
+495.0,,AF0404310,Priya Kumari,6207152055,JHAFT,Mangal kumar,Placement,Call
+496.0,,AF0417349,Kanhaiya Jee,8521184877,JHAFT,Mangal kumar,Placement,Call
+497.0,,AF0373169,Chandni Kumari,8298080883,JHAFT,Mangal kumar,Placement,Call
+498.0,,AF0406312,SATISH KUMAR,9795853512,JHAFT,Mangal kumar,Placement,Call
+499.0,,AF0418572,Soni Kumari,7667137775,JHAFT,Mangal kumar,Placement,Call
+500.0,,AF0392737,RIYAJ ANSARI,7368946469,JHBIT,Shamim Ansari,Placement,Call
+501.0,,AF0384894,CHHOTU KUMAR SHARMA,9471377638,JHBIT,Shamim Ansari,Placement,Call
+502.0,,AF0385560,ROHIT KUMAR,9835136304,JHBIT,Shamim Ansari,Placement,Call
+503.0,,AF0389597,SANOJ KUMAR MAHTO,9279268937,JHBIT,Shamim Ansari,Placement,Call
+504.0,,AF0410937,Simran Kumari,6204003090,JHBIT,Shamim Ansari,Placement,Call
+505.0,,AF0411250,Anjali Kumari,9279750962,JHBIT,Shamim Ansari,Placement,Call
+506.0,,AF0404157,Shreya Sonu kumari,9341269676,JHAFT,Mangal kumar,Placement,Googlemeet
+507.0,,AF0403139,Sachin Kumar,6299610326,JHAFT,Mangal kumar,Placement,Googlemeet
+508.0,,AF0410898,SHUBHAM KUMAR SINGH,8340382435,JHAFT,Mangal kumar,Placement,Googlemeet
+509.0,,AF0412224,Varsha Kumari,9905127570,JHAFT,Mangal kumar,Placement,Googlemeet
+510.0,,AF0412340,Manisha Kumari,7667389556,JHAFT,Mangal kumar,Placement,Googlemeet
+511.0,,AF0446229,LALITA PRADHAN,7847862570,ODACC,Anil Kumar Pradhan,Placement,Call
+512.0,,AF0447572,Rosalin Nayak,7846843296,ODACC,Anil Kumar Pradhan,Placement,Call
+513.0,,AF0402083,Punyatoya Dash,9692665445,ODACC,Anil Kumar Pradhan,Placement,Call
+514.0,,AF0424688,BIKRAMADITTYA HALDAR,8167575796,Diamind Harbour (WBRCD),Santanu Pal,Placement,Call
+515.0,,AF0424766,SAMIM SARDAR,8695439941,Diamind Harbour (WBRCD),Santanu Pal,Placement,Call
+516.0,,AF0426220,SAYAN ROY,8972668538,Diamind Harbour (WBRCD),Santanu Pal,Placement,Call
+517.0,,AF0433537,Sk OSHIYAR,8391816202,WBHDA,Amitava Maity,Placement,Call
+518.0,,AF0433598,SK MOSARAF TULLA,6295324505,WBHDA,Amitava Maity,Placement,Call
+519.0,,AF0437164,Subhadip Patra,9339557464,WBHDA,Amitava Maity,Placement,Call
+520.0,,AF0404980,Sukdev Maity,9083470534,WBHDA,Amitava Maity,Placement,Call
+521.0,,AF0417123,Tanisha Panchal,8950393540,DLRHL,Faizul Hasan,Placement,Call
+522.0,,AF0417143,Khushi,9729247104,DLRHL,Faizul Hasan,Placement,Call
+523.0,,AF0417148,Tanisha,9350167028,DLRHL,Faizul Hasan,Placement,Call
+524.0,,AF0417252,Ms Monika,9729466248,DLRHL,Faizul Hasan,Placement,Call
+525.0,,AF0417498,Ms Saaki,7206628852,DLRHL,Faizul Hasan,Placement,Call
+526.0,,AF0417501,Ms Bhawna,8307871332,DLRHL,Faizul Hasan,Placement,Call
+527.0,,AF0401803,RAJ KUMAR,7488501794,BRAXI,Sunil Kumar Sah,Placement,Call
+528.0,,AF0407797,Rupali Kumari,7004404874,BRAXI,Sunil Kumar Sah,Placement,Call
+529.0,,AF0404635,Sejal Kumari,7808611519,BRAXI,Sunil Kumar Sah,Placement,Call
+530.0,,AF0413472,Vikash Kumar,6203906618,BRAXI,Sunil Kumar Sah,Placement,Call
+531.0,,AF0424198,Khushi Kumari,7739626006,BRAXI,Sunil Kumar Sah,Placement,Call
+532.0,,AF0424130,Roushan Kumar,6201376423,BRAXI,Sunil Kumar Sah,Placement,Call
+533.0,,AF0424899,Niharika Prasad,9142397023,BRAXI,Sunil Kumar Sah,Placement,Call
+534.0,,AF0446494,Vineet Kumar,6201128020,BRAXI,Sunil Kumar Sah,Placement,Call
+535.0,,AF0449328,Rishi Kumar,8539870425,BRAXI,Sunil Kumar Sah,Placement,Call
+536.0,,AF0407651,Tanzeem Parveen,9097933207,BRAXI,Sunil Kumar Sah,Placement,Call
+,,AF0000000,Nibedan,9083387648,Ho,Test_Nibedan,Enrollment,Call
+,,AF0000000,Nibedan,9083387648,Ho,Test_Nibedan,Enrollment,Call
+,,AF0000000,Nibedan,9083387648,Ho,Test_Nibedan,Enrollment,Call

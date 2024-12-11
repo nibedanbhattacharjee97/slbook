@@ -1,0 +1,44 @@
+id,booking_id,date,time_range,manager,spoc,booked_by
+9,,2024-09-17,11:00 AM - 12:00 PM,Krishna Sadhan Adhikari,Pritha Sen,PALASH PAL
+10,,2024-09-17,2:00 PM - 3:00 PM,Dibyendu Das,Anusua Bhattacharya,mangal.kumar@anudip.org
+11,,2024-09-18,3:00 PM - 4:00 PM,Krishna Sadhan Adhikari,Pritha Sen,Monalisa Moharana
+12,,2024-09-18,3:00 PM - 4:00 PM,Dibyendu Das,Anusua Bhattacharya,Vipul Kumar
+13,,2024-09-17,3:00 PM - 4:00 PM,Sudipta Biswas,Jeyashri Chandramohan,S INDHUMATHY 
+14,,2024-09-18,2:00 PM - 3:00 PM,Jyothy Franklin,Karra Shruti,HITESH JAIN
+15,,2024-09-30,2:00 PM - 3:00 PM,Test_Rm (FOR TEST M&E),TEST SPOC  (FOR TEST M&E),nibedan
+16,,2024-09-20,12:00 PM - 1:00 PM,Dibyendu Das,Anusua Bhattacharya,Sourav Bagchi
+17,,2024-09-19,3:00 PM - 4:00 PM,Dibyendu Das,Anusua Bhattacharya,Sourav Bagchi
+18,,2024-09-23,11:00 AM - 12:00 PM,Dibyendu Das,Anusua Bhattacharya,Subrata Bagdi
+19,,2024-09-25,12:00 PM - 1:00 PM,Dibyendu Das,Anusua Bhattacharya,Subrata Bagdi
+20,,2024-09-30,11:00 AM - 12:00 PM,Sanjeev Kumar,Anusua Bhattacharya,Pramod Singh
+21,,2024-10-03,12:00 PM - 1:00 PM,Vivek Kumar,Sayani Chakraborty,Tanaaz Khan
+22,,2024-10-05,10:00 AM - 11:00 AM,Krishna Sadhan Adhikari,Pritha Sen,PALASH PAL
+23,,2024-10-03,12:00 PM - 1:00 PM,Dibyendu Das,Anusua Bhattacharya,mangal.kumar@anudip.org
+24,,2024-10-04,12:00 PM - 1:00 PM,Dibyendu Das,Anusua Bhattacharya,mangal.kumar@anudip.org
+25,,2024-10-07,12:00 PM - 1:00 PM,Krishna Sadhan Adhikari,Sahana Ghosh,Bimal Kar
+26,,2024-10-04,11:00 AM - 12:00 PM,Krishna Sadhan Adhikari,Pritha Sen,ROMIT SAMANTA
+27,,2024-10-04,2:00 PM - 3:00 PM,Krishna Sadhan Adhikari,Sahana Ghosh,ROMIT SAMANTA
+28,,2024-10-04,2:00 PM - 3:00 PM,Vivek Kumar,Sayani Chakraborty,TANAAZ KHAN
+29,,2024-10-05,11:00 AM - 12:00 PM,Vivek Kumar,Sayani Chakraborty,Faizul Hasan
+30,,2024-10-08,2:00 PM - 3:00 PM,Krishna Sadhan Adhikari,Sahana Ghosh,Santanu Pal
+31,,2024-10-09,2:00 PM - 3:00 PM,Krishna Sadhan Adhikari,Sahana Ghosh,Santanu Pal
+32,,2024-10-08,10:00 AM - 11:00 AM,Dibyendu Das,Anusua Bhattacharya,Jyoti Ranjan Mohanty
+33,,2024-10-28,3:00 PM - 4:00 PM,Dibyendu Das,Anusua Bhattacharya,mangal.kumar@anudip.org
+34,,2024-10-30,10:00 AM - 11:00 AM,Dibyendu Das,Anusua Bhattacharya,Krishnendu Chakraborty
+35,,2024-10-28,2:00 PM - 3:00 PM,Pritha Sen,Krishna Sadhan Adhikari,Prasanta Dhara
+36,,2024-10-29,10:00 AM - 11:00 AM,Krishna Sadhan Adhikari,Sahana Ghosh,PALASH PAL
+37,,2024-10-08,2:00 PM - 3:00 PM,Vivek Kumar,Sayani Chakraborty,Faizul Hasan
+38,,2024-10-24,12:00 PM - 1:00 PM,Vivek Kumar,Sayani Chakraborty,Faizul Hasan
+39,,2024-10-25,2:00 PM - 3:00 PM,Vivek Kumar,Sayani Chakraborty,Faizul Hasan
+40,,2024-10-28,12:00 PM - 1:00 PM,Vivek Kumar,Sayani Chakraborty,Faizul Hasan
+41,,2024-10-29,3:00 PM - 4:00 PM,Vivek Kumar,Sayani Chakraborty,Faizul Hasan
+42,,2024-11-05,2:00 PM - 3:00 PM,Krishna Sadhan Adhikari,Pritha Sen,Prasanta Dhara
+43,,2024-11-08,3:00 PM - 4:00 PM,Krishna Sadhan Adhikari,Sahana Ghosh,anil.pradhan@anudip.org
+44,,2024-11-20,12:00 PM - 1:00 PM,Krishna Sadhan Adhikari,Pritha Sen,Krishnendu Chakraborty
+45,,2024-12-02,2:00 PM - 3:00 PM,Krishna Sadhan Adhikari,Sahana Ghosh,Santanu Pal
+46,,2024-12-03,2:00 PM - 3:00 PM,Krishna Sadhan Adhikari,Sahana Ghosh,Santanu Pal
+47,,2024-12-05,10:00 AM - 11:00 AM,Anusua Bhattacharya,Sanjeev Kumar,Pramod Singh
+48,,2024-12-06,10:00 AM - 11:00 AM,Anusua Bhattacharya,Sanjeev Kumar,Sunil Kumar Sah
+49,,2024-12-02,10:00 AM - 11:00 AM,Test_Rm (FOR TEST M&E),TEST SPOC  (FOR TEST M&E),Nibedan
+50,,2024-12-02,10:00 AM - 11:00 AM,Test_Rm (FOR TEST M&E),Nibedan,Nibedan
+51,,2024-12-06,10:00 AM - 11:00 AM,Test_Rm (FOR TEST M&E),TEST SPOC  (FOR TEST M&E),Nibedan
