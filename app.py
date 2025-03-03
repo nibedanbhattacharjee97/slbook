@@ -72,13 +72,12 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
     conn.close()
     st.success('Slot booked successfully!')
 
-# Function to update another database from uploaded Excel file
 def update_another_database(file):
     df = pd.read_excel(file)
 
-    conn = sqlite3.connect('duplicate.db')
+    conn = sqlite3.connect('Plana.db')
     c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS studentcap
+    c.execute('''CREATE TABLE IF NOT EXISTS plana
                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
                  cmis_id TEXT,
                  student_name TEXT,
@@ -86,27 +85,28 @@ def update_another_database(file):
                  center_name TEXT,
                  uploader_name TEXT,
                  verification_type TEXT,
-                 mode_of_verification TEXT)''')
+                 mode_of_verification TEXT,
+                 verification_date TEXT)''')
     conn.commit()
 
     for index, row in df.iterrows():
-        c.execute('''INSERT INTO studentcap (cmis_id, student_name, cmis_ph_no, center_name, uploader_name, verification_type, mode_of_verification)
-                     VALUES (?, ?, ?, ?, ?, ?, ?)''', (row['CMIS ID'], row['Student Name'], row['CMIS PH No(10 Number)'],
-                                                row['Center Name'], row['Name Of Uploder'], row['Verification Type'], row['Mode Of Verification']))
+        c.execute('''INSERT INTO plana (cmis_id, student_name, cmis_ph_no, center_name, uploader_name, verification_type, mode_of_verification, verification_date)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)''', (row['CMIS ID'], row['Student Name'], row['CMIS PH No(10 Number)'],
+                                                          row['Center Name'], row['Name Of Uploder'], row['Verification Type'], row['Mode Of Verification'], row['Verification Date']))
     conn.commit()
     conn.close()
 
     st.success('Data updated successfully!')
 
-# Function to download data from duplicate.db
+# Function to download data from Plana.db
 def download_another_database_data():
-    conn = sqlite3.connect('duplicate.db')
-    df = pd.read_sql_query("SELECT * FROM studentcap", conn)
+    conn = sqlite3.connect('Plana.db')
+    df = pd.read_sql_query("SELECT * FROM plana", conn)
     conn.close()
     
     csv = df.to_csv(index=False)
     b64 = base64.b64encode(csv.encode()).decode()
-    href = f'<a href="data:file/csv;base64,{b64}" download="studentcap.csv">Download CSV</a>'
+    href = f'<a href="data:file/csv;base64,{b64}" download="plana.csv">Download CSV</a>'
     st.markdown(href, unsafe_allow_html=True)
 
 # Function to generate HTML for calendar view with bookings highlighted
@@ -123,8 +123,8 @@ def generate_calendar(bookings):
         else:
             date = pd.Timestamp(year=current_year, month=current_month, day=day)
             bookings_on_day = bookings[(bookings['date'].dt.year == current_year) &
-                                       (bookings['date'].dt.month == current_month) &
-                                       (bookings['date'].dt.day == day)]
+                                        (bookings['date'].dt.month == current_month) &
+                                        (bookings['date'].dt.day == day)]
 
             if date.weekday() == 6:
                 day_style = 'background-color: red;'
@@ -165,22 +165,19 @@ def generate_calendar(bookings):
 
     return calendar_html
 
-# Function to bulk delete data from studentcap table in duplicate.db by cmis_id
-def bulk_delete_studentcap(cmis_ids):
-    conn = sqlite3.connect('duplicate.db')
+# Function to bulk delete data from plana table in Plana.db by cmis_id
+def bulk_delete_plana(cmis_ids):
+    conn = sqlite3.connect('Plana.db')
     c = conn.cursor()
     
     for cmis_id in cmis_ids:
-        c.execute("DELETE FROM studentcap WHERE cmis_id = ?", (cmis_id,))
+        c.execute("DELETE FROM plana WHERE cmis_id = ?", (cmis_id,))
     
     conn.commit()
     conn.close()
     st.success("Selected records deleted successfully.")
 
-import xlsxwriter  # Import xlsxwriter module
-
 def download_sample_excel():
-    # Sample data for the Excel file
     sample_data = {
         'CMIS ID': ['123', '456', '789'],
         'Student Name': ['John Doe', 'Jane Smith', 'Jim Beam'],
@@ -188,7 +185,8 @@ def download_sample_excel():
         'Center Name': ['Center 1', 'Center 2', 'Center 3'],
         'Name Of Uploder': ['Uploader 1', 'Uploader 2', 'Uploader 3'],
         'Verification Type': ['Placement', 'Placement', 'Enrollment', ],
-        'Mode Of Verification': ['G-meet', 'Call', 'Call']
+        'Mode Of Verification': ['G-meet', 'Call', 'Call'],
+        'Verification Date': ['28-02-2025', '24-02-2025', '10-02-2025']
     }
 
     # Creating a DataFrame from the sample data
@@ -317,14 +315,18 @@ def main():
         href = f'<a href="data:file/csv;base64,{b64}" download="monthly_bookings.csv">Download CSV</a>'
         st.markdown(href, unsafe_allow_html=True)
 
-    # Bulk delete student data
-    st.header('Bulk Delete Student Data')
-    file = st.file_uploader('Upload CSV with CMIS IDs to delete', type=['csv'])
-    if file is not None:
-        cmis_ids_df = pd.read_csv(file)
-        cmis_ids = cmis_ids_df['cmis_id'].tolist()
-        if st.button('Delete Records'):
-            bulk_delete_studentcap(cmis_ids)
+## Show Excel
+
+    st.subheader("SPOC List")
+    try:
+        spoc_list_df = pd.read_excel("SPOC_List.xlsx")
+        st.dataframe(spoc_list_df)
+    except FileNotFoundError:
+        st.error("SPOC_List.xlsx not found. Please ensure the file is in the correct directory.")
+    except Exception as e:
+        st.error(f"An error occurred while loading SPOC_List.xlsx: {e}")
+
+
 
 # Run the app
 if __name__ == '__main__':
