@@ -6,6 +6,8 @@ from datetime import datetime
 import base64
 from io import BytesIO
 
+st.image("dddd.jpg", use_column_width=True)
+
 # Function to load data from Excel into a DataFrame with @st.cache_data
 @st.cache_data(hash_funcs={pd.DataFrame: lambda _: None})
 def load_data(file):
