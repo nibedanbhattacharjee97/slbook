@@ -317,17 +317,6 @@ def main():
         href = f'<a href="data:file/csv;base64,{b64}" download="monthly_bookings.csv">Download CSV</a>'
         st.markdown(href, unsafe_allow_html=True)
 
-## Show Excel
-
-    st.subheader("SPOC List For Upcoming Dates")
-    try:
-        spoc_list_df = pd.read_excel("SPOC_List.xlsx")
-        st.dataframe(spoc_list_df)
-    except FileNotFoundError:
-        st.error("SPOC_List.xlsx not found. Please ensure the file is in the correct directory.")
-    except Exception as e:
-        st.error(f"An error occurred while loading SPOC_List.xlsx: {e}")
-
 
 
 # Run the app
