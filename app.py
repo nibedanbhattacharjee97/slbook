@@ -6,7 +6,7 @@ from datetime import datetime
 import base64
 from io import BytesIO
 
-st.text("The Slot Booking Platform is currently under development,so dont Book Slot For Now.")
+#st.text("The Slot Booking Platform is currently under development,so dont Book Slot For Now.")
 
 @st.cache_data(hash_funcs={pd.DataFrame: lambda _: None})
 def load_data(file):
