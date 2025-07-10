@@ -6,7 +6,7 @@ from datetime import datetime
 import base64
 from io import BytesIO
 
-st.text("The Slot Booking Platform is currently under development,so dont Book Slot For Now,If You Have Any Query Please Contact To Pritam Basu")
+st.text("The Slot Booking Platform is currently under development,so dont Book Slot For Now.")
 
 # Function to load data from Excel into a DataFrame with @st.cache_data
 @st.cache_data(hash_funcs={pd.DataFrame: lambda _: None})
