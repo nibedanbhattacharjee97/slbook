@@ -2,13 +2,11 @@ import streamlit as st
 import pandas as pd
 import calendar
 from datetime import datetime
-import base64
 from io import BytesIO
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 # --- GOOGLE SHEETS CONNECTION SETUP ---
-# Cached connection client so it doesn't re-authenticate on every interaction
 @st.cache_resource
 def get_gspread_client():
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
@@ -60,10 +58,9 @@ def get_worksheet(worksheet_name):
         else:
             raise
 
-# --- CACHED FETCHING TO FIX BUFFERING ---
+# --- CACHED FETCHING ---
 @st.cache_data(ttl=15)
 def fetch_sheet_values(worksheet_name):
-    """Caches sheet data for 15 seconds to eliminate repetitive loading lags."""
     ws = get_worksheet(worksheet_name)
     return ws.get_all_values()
 
@@ -82,7 +79,6 @@ def load_validation_ids():
         return None
 
 def clean_id_series(series):
-    """Helper function to clean float representations and extra whitespaces from IDs"""
     return series.astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
 
 # --- BOOKING FUNCTION ---
@@ -125,11 +121,11 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
     
     with st.spinner("Processing your booking..."):
         ws.append_row([next_id, date, time_range, manager, spoc, booked_by])
-        st.cache_data.clear()  # Clear cache to reflect updates instantly
-        st.success('Slot booked successfully!')
+        st.cache_data.clear()  
+        st.session_state['last_action_msg'] = f"✅ Slot booked successfully for {spoc} on {date} ({time_range})!"
         st.rerun()
 
-# --- OPTIMIZED UPLOAD FUNCTION (Prevents Upload Crashes) ---
+# --- OPTIMIZED UPLOAD FUNCTION ---
 def update_another_database(file):
     with st.spinner("Processing data matching against validation sheet..."):
         df = pd.read_excel(file)
@@ -148,7 +144,6 @@ def update_another_database(file):
 
         ws = get_worksheet('plana')
         
-        # Performance optimization: Count rows using length of 1 column instead of downloading the entire grid matrix
         try:
             existing_records_count = len(ws.col_values(1)) - 1
         except Exception:
@@ -175,44 +170,12 @@ def update_another_database(file):
     with st.spinner("Uploading records to Google Sheets..."):
         try:
             ws.append_rows(rows_to_insert, value_input_option='USER_ENTERED')
-            st.cache_data.clear()  # Purge cache
+            st.cache_data.clear() 
             st.session_state['data_uploaded'] = True
-            st.success(f"{len(filtered_df)} valid records inserted successfully into Google Sheets.")
+            st.session_state['last_action_msg'] = f"✅ Success! {len(filtered_df)} valid student records uploaded and processed successfully."
             st.rerun()
         except Exception as e:
             st.error(f"Upload failed. Google network rejected payload size. Try breaking down your sheets into smaller chunks. Error: {e}")
-
-def download_another_database_data():
-    all_vals = fetch_sheet_values('plana')
-    
-    if len(all_vals) <= 1:
-        st.error("No valid data found for M&E verification.")
-        return
-        
-    headers = all_vals[0]
-    df = pd.DataFrame(all_vals[1:], columns=headers)
-    
-    ids_df = load_validation_ids()
-    if ids_df is None:
-        return
-        
-    valid_ids = clean_id_series(ids_df['CMIS_ID']).unique()
-    
-    if 'cmis_id' in df.columns:
-        df['cmis_id'] = clean_id_series(df['cmis_id'])
-        filtered_df = df[df['cmis_id'].isin(valid_ids)]
-    else:
-        st.error("Missing expected 'cmis_id' structure in Google Sheets database header values.")
-        return
-
-    if filtered_df.empty:
-        st.error("No valid data found matching your validation IDs.")
-        return
-
-    csv = filtered_df.to_csv(index=False)
-    b64 = base64.b64encode(csv.encode()).decode()
-    href = f'<a href="data:file/csv;base64,{b64}" download="plana_filtered.csv">Download CSV</a>'
-    st.markdown(href, unsafe_allow_html=True)
 
 def generate_calendar(bookings):
     cal = calendar.Calendar()
@@ -260,35 +223,15 @@ def generate_calendar(bookings):
     </div>
     """
 
-def download_sample_excel():
-    sample_data = {
-        'CMIS ID': ['123', '456', '789'],
-        'Student Name': ['John Doe', 'Jane Smith', 'Jim Beam'],
-        'CMIS PH No(10 Number)': ['1234567890', '0987654321', '1122334455'],
-        'Center Name': ['Center 1', 'Center 2', 'Center 3'],
-        'Name Of Uploder': ['Uploader 1', 'Uploader 2', 'Uploader 3'],
-        'Verification Type': ['Placement', 'Placement', 'Enrollment'],
-        'Mode Of Verification': ['G-meet', 'Call', 'Call'],
-        'Verification Date': ['28-02-2025', '28-02-2025', '28-02-2025']
-    }
-
-    df = pd.DataFrame(sample_data)
-    output = BytesIO()
-    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-        df.to_excel(writer, index=False, sheet_name='Sheet1')
-        worksheet = writer.sheets['Sheet1']
-        for i, col in enumerate(df.columns):
-            column_len = max(df[col].astype(str).map(len).max(), len(col)) + 2
-            worksheet.set_column(i, i, column_len)
-    output.seek(0)
-    b64 = base64.b64encode(output.read()).decode()
-    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Sample_Excel.xlsx">Download Sample Excel</a>'
-    st.markdown(href, unsafe_allow_html=True)
-
-# --- MAIN EXECUTIVE APPLICATION APPLICATION ---
+# --- MAIN EXECUTIVE APPLICATION ---
 def main():
     st.title('Slot Booking Platform')
     
+    # Persistent Success Messaging banner across reruns
+    if 'last_action_msg' in st.session_state:
+        st.success(st.session_state['last_action_msg'])
+        del st.session_state['last_action_msg']
+
     data = load_data('managers_spocs.xlsx')
 
     selected_manager = st.selectbox('Select Manager', data['Manager Name'].unique())
@@ -300,6 +243,19 @@ def main():
     selected_time_range = st.selectbox('Select Time', time_ranges)
     booked_by = st.text_input('Slot Booked By')
 
+    # --- NEW: LIVE PREVIEW MATRIX ---
+    st.markdown("---")
+    st.subheader("Current Entry Preview Details")
+    preview_df = pd.DataFrame([{
+        "Date": str(selected_date),
+        "Time Range": selected_time_range,
+        "Manager": selected_manager,
+        "SPOC": selected_spoc,
+        "Booked By": booked_by if booked_by else "⚠️ Required field missing"
+    }])
+    st.dataframe(preview_df, use_container_width=True, hide_index=True)
+    st.markdown("---")
+
     st.subheader('Upload Student Data For SPOC Calling')
     st.markdown('**Please ensure that only student data marked as Not Joined or Not Contacted from the M&E database is included.**')
 
@@ -307,33 +263,83 @@ def main():
     data_uploaded = st.session_state.get('data_uploaded', False)
     
     if file is not None:
-        if st.button('Update Data'):
+        if st.button('Update Data', use_container_width=True):
             update_another_database(file)
 
     if not data_uploaded:
         st.warning('Please upload student data before booking a slot.')
     else:
-        if st.button('Book Slot'):
+        if st.button('Book Slot', type="primary", use_container_width=True):
             insert_booking(str(selected_date), selected_time_range, selected_manager, selected_spoc, booked_by)
 
-    st.subheader('Download The Format To Update Student Data For SPOC Calling')
-    if st.button('Download Sample'):
-        download_sample_excel()
+    # --- OPTIMIZED CLEAN DOWNLOADING LOGIC ---
+    st.subheader('Data Operations & Formats')
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        sample_data = {
+            'CMIS ID': ['123', '456', '789'],
+            'Student Name': ['John Doe', 'Jane Smith', 'Jim Beam'],
+            'CMIS PH No(10 Number)': ['1234567890', '0987654321', '1122334455'],
+            'Center Name': ['Center 1', 'Center 2', 'Center 3'],
+            'Name Of Uploder': ['Uploader 1', 'Uploader 2', 'Uploader 3'],
+            'Verification Type': ['Placement', 'Placement', 'Enrollment'],
+            'Mode Of Verification': ['G-meet', 'Call', 'Call'],
+            'Verification Date': ['28-02-2025', '28-02-2025', '28-02-2025']
+        }
+        df_sample = pd.DataFrame(sample_data)
+        output = BytesIO()
+        with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+            df_sample.to_excel(writer, index=False, sheet_name='Sheet1')
+        st.download_button(
+            label="📋 Download Sample Format",
+            data=output.getvalue(),
+            file_name="Sample_Excel.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            use_container_width=True
+        )
 
-    if st.button('Download Data For M&E Purpose'):
-        download_another_database_data()
-
+    # Fetch fresh bookings tracking matrix
     try:
         all_vals = fetch_sheet_values('slot_booking_new')
-        if len(all_vals) > 1:
-            bookings = pd.DataFrame(all_vals[1:], columns=all_vals[0])
-        else:
-            bookings = pd.DataFrame()
+        bookings = pd.DataFrame(all_vals[1:], columns=all_vals[0]) if len(all_vals) > 1 else pd.DataFrame()
     except Exception:
         bookings = pd.DataFrame()
     
     if 'date' in bookings.columns and not bookings.empty:
         bookings['date'] = pd.to_datetime(bookings['date'], errors='coerce')
+
+    with col2:
+        all_plana = fetch_sheet_values('plana')
+        if len(all_plana) > 1:
+            df_plana = pd.DataFrame(all_plana[1:], columns=all_plana[0])
+            ids_df = load_validation_ids()
+            if ids_df is not None and 'cmis_id' in df_plana.columns:
+                valid_ids = clean_id_series(ids_df['CMIS_ID']).unique()
+                df_plana['cmis_id'] = clean_id_series(df_plana['cmis_id'])
+                filtered_plana = df_plana[df_plana['cmis_id'].isin(valid_ids)]
+                
+                st.download_button(
+                    label="📥 Download M&E Verified Data",
+                    data=filtered_plana.to_csv(index=False),
+                    file_name="plana_filtered.csv",
+                    mime="text/csv",
+                    use_container_width=True
+                )
+        else:
+            st.button("📥 Download M&E Verified Data", disabled=True, use_container_width=True)
+
+    with col3:
+        if not bookings.empty:
+            st.download_button(
+                label="🗓️ Download Monthly Bookings",
+                data=bookings.to_csv(index=False),
+                file_name="monthly_bookings.csv",
+                mime="text/csv",
+                use_container_width=True
+            )
+        else:
+            st.button("🗓️ Download Monthly Bookings", disabled=True, use_container_width=True)
 
     st.subheader('Calendar View (Current Month Status)')
     st.markdown(generate_calendar(bookings), unsafe_allow_html=True)
@@ -346,20 +352,11 @@ def main():
         if not today_bookings_df.empty:
             st.write(f"Bookings for today ({current_date}):")
             for _, row in today_bookings_df.iterrows():
-                st.write(f"- Time Slot: {row.get('time_range', '')}, Manager: {row.get('manager', '')}, SPOC: {row.get('spoc', '')}")
+                st.write(f"- **Time Slot:** {row.get('time_range', '')} | **Manager:** {row.get('manager', '')} | **SPOC:** {row.get('spoc', '')}")
         else:
-            st.write("No bookings for today.")
+            st.info("No bookings scheduled for today.")
     else:
-        st.write("No bookings for today.")
-
-    if st.button('Download Monthly Data'):
-        if not bookings.empty:
-            csv = bookings.to_csv(index=False)
-            b64 = base64.b64encode(csv.encode()).decode()
-            href = f'<a href="data:file/csv;base64,{b64}" download="monthly_bookings.csv">Download CSV</a>'
-            st.markdown(href, unsafe_allow_html=True)
-        else:
-            st.warning("No booking data available to extract.")
+        st.info("No bookings scheduled for today.")
 
 if __name__ == '__main__':
     main()
