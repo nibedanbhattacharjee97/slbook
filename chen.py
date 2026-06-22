@@ -242,20 +242,7 @@ def main():
     time_ranges = ['10:00 AM - 11:00 AM', '11:00 AM - 12:00 PM', '12:00 PM - 1:00 PM', '2:00 PM - 3:00 PM', '3:00 PM - 4:00 PM']
     selected_time_range = st.selectbox('Select Time', time_ranges)
     booked_by = st.text_input('Slot Booked By')
-
-    # --- NEW: LIVE PREVIEW MATRIX ---
-    st.markdown("---")
-    st.subheader("Current Entry Preview Details")
-    preview_df = pd.DataFrame([{
-        "Date": str(selected_date),
-        "Time Range": selected_time_range,
-        "Manager": selected_manager,
-        "SPOC": selected_spoc,
-        "Booked By": booked_by if booked_by else "⚠️ Required field missing"
-    }])
-    st.dataframe(preview_df, use_container_width=True, hide_index=True)
-    st.markdown("---")
-
+    
     st.subheader('Upload Student Data For SPOC Calling')
     st.markdown('**Please ensure that only student data marked as Not Joined or Not Contacted from the M&E database is included.**')
 
