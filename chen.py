@@ -8,6 +8,8 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 # --- GOOGLE SHEETS CONNECTION SETUP ---
+# Cached connection client so it doesn't re-authenticate on every interaction
+@st.cache_resource
 def get_gspread_client():
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
     
@@ -58,18 +60,33 @@ def get_worksheet(worksheet_name):
         else:
             raise
 
-@st.cache_data(hash_funcs={pd.DataFrame: lambda _: None})
-def load_data(file):
-    df = pd.read_excel(file)
+# --- OPTIMIZATION: Cached Fetching Functions ---
+# We cache these pulls for 10 seconds to stop it pulling from Google on every widget toggle
+@st.cache_data(ttl=10)
+def fetch_sheet_values(worksheet_name):
+    ws = get_worksheet(worksheet_name)
+    return ws.get_all_values()
+
+@st.cache_data
+def load_data(file_path):
+    # If it's a fixed file name string, read it once
+    df = pd.read_excel(file_path)
     df.rename(columns={'Actual_Manager_Column_Name': 'Manager Name', 'Actual_SPOC_Column_Name': 'SPOC Name'}, inplace=True)
     return df
+
+@st.cache_data
+def load_validation_ids():
+    try:
+        return pd.read_excel('ids.xlsx')
+    except Exception as e:
+        st.error(f"Could not read validation file 'ids.xlsx'. Error: {e}")
+        return None
 
 def clean_id_series(series):
     """Helper function to clean float representations and extra whitespaces from IDs"""
     return series.astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
 
 def insert_booking(date, time_range, manager, spoc, booked_by):
-    st.write(f'Attempting to book slot for: Date: {date}, Time Range: {time_range}, Manager: {manager}, SPOC: {spoc}, Booked By: {booked_by}')
     if not booked_by:
         st.error('Slot booking failed. You must provide your name in the "Slot Booked By" field.')
         return
@@ -90,9 +107,8 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
         st.error('If Error Message Reflects Or To Book Slot On Holidays & Other Than Official Hours Please Contact To Pritam Basu & Kousik Dey.')
         return
 
-    ws = get_worksheet('slot_booking_new')
-    # Using get_all_values to circumvent potential duplicate header issues here too
-    all_vals = ws.get_all_values()
+    # Use cached fetch instead of direct API call
+    all_vals = fetch_sheet_values('slot_booking_new')
     headers = all_vals[0] if all_vals else []
     records = [dict(zip(headers, row)) for row in all_vals[1:]] if len(all_vals) > 1 else []
     
@@ -105,21 +121,23 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
         st.error('Slot booking failed. This SPOC is already booked for the selected date.')
         return
 
-    next_id = len(all_vals)  # row length includes header, so it matches next_id perfectly
+    next_id = len(all_vals)
+    ws = get_worksheet('slot_booking_new')
     ws.append_row([next_id, date, time_range, manager, spoc, booked_by])
+    
+    # Clear cache so next screen load reflects the updated database instantly
+    st.cache_data.clear()
     st.success('Slot booked successfully!')
+    st.rerun()
 
 def update_another_database(file):
     df = pd.read_excel(file)
+    ids_df = load_validation_ids()
     
-    try:
-        ids_df = pd.read_excel('ids.xlsx')
-        valid_ids = clean_id_series(ids_df['CMIS_ID']).unique()
-    except Exception as e:
-        st.error(f"Could not read validation file 'ids.xlsx'. Error: {e}")
+    if ids_df is None:
         return
 
-    # Clean the uploaded Excel data column to avoid '.0' float issues
+    valid_ids = clean_id_series(ids_df['CMIS_ID']).unique()
     df['CMIS ID'] = clean_id_series(df['CMIS ID'])
     filtered_df = df[df['CMIS ID'].isin(valid_ids)]
 
@@ -127,12 +145,9 @@ def update_another_database(file):
         st.error("No valid records matched the validation IDs. Check if the IDs in your uploaded sheet match 'ids.xlsx'.")
         return
 
-    ws = get_worksheet('plana')
-    
-    # CRITICAL FIX: Safe row counter that doesn't crash on duplicate sheet headers
-    existing_records_count = len(ws.get_all_values()) - 1
-    if existing_records_count < 0:
-        existing_records_count = 0
+    # Use cached call to grab data footprint size safely
+    all_vals = fetch_sheet_values('plana')
+    existing_records_count = max(0, len(all_vals) - 1)
         
     rows_to_insert = []
     for index, row in filtered_df.iterrows():
@@ -149,27 +164,29 @@ def update_another_database(file):
             str(row.get('Verification Date', ''))
         ])
         
+    ws = get_worksheet('plana')
     ws.append_rows(rows_to_insert)
+    
+    # Clear cache to reset local state data
+    st.cache_data.clear()
     st.success(f"{len(filtered_df)} valid records inserted successfully into Google Sheets.")
+    st.rerun()
 
 def download_another_database_data():
-    ws = get_worksheet('plana')
-    all_vals = ws.get_all_values()
+    all_vals = fetch_sheet_values('plana')
     
     if len(all_vals) <= 1:
         st.error("No valid data found for M&E verification.")
         return
         
-    # Build dataframe safely ignoring duplicate header errors from get_all_records()
     headers = all_vals[0]
     df = pd.DataFrame(all_vals[1:], columns=headers)
     
-    try:
-        ids_df = pd.read_excel('ids.xlsx')
-        valid_ids = clean_id_series(ids_df['CMIS_ID']).unique()
-    except Exception as e:
-        st.error(f"Could not load verification IDs: {e}")
+    ids_df = load_validation_ids()
+    if ids_df is None:
         return
+        
+    valid_ids = clean_id_series(ids_df['CMIS_ID']).unique()
     
     if 'cmis_id' in df.columns:
         df['cmis_id'] = clean_id_series(df['cmis_id'])
@@ -297,8 +314,8 @@ def main():
         download_another_database_data()
 
     try:
-        ws_booking = get_worksheet('slot_booking_new')
-        all_vals = ws_booking.get_all_values()
+        # Optimized with cache fetching function
+        all_vals = fetch_sheet_values('slot_booking_new')
         if len(all_vals) > 1:
             bookings = pd.DataFrame(all_vals[1:], columns=all_vals[0])
         else:
