@@ -60,21 +60,20 @@ def get_worksheet(worksheet_name):
         else:
             raise
 
-# --- OPTIMIZATION: Cached Fetching Functions ---
-# We cache these pulls for 10 seconds to stop it pulling from Google on every widget toggle
-@st.cache_data(ttl=10)
+# --- CACHED FETCHING TO FIX BUFFERING ---
+@st.cache_data(ttl=15)
 def fetch_sheet_values(worksheet_name):
+    """Caches sheet data for 15 seconds to eliminate repetitive loading lags."""
     ws = get_worksheet(worksheet_name)
     return ws.get_all_values()
 
 @st.cache_data
 def load_data(file_path):
-    # If it's a fixed file name string, read it once
     df = pd.read_excel(file_path)
     df.rename(columns={'Actual_Manager_Column_Name': 'Manager Name', 'Actual_SPOC_Column_Name': 'SPOC Name'}, inplace=True)
     return df
 
-@st.cache_data
+@st.cache_data(ttl=60)
 def load_validation_ids():
     try:
         return pd.read_excel('ids.xlsx')
@@ -86,6 +85,7 @@ def clean_id_series(series):
     """Helper function to clean float representations and extra whitespaces from IDs"""
     return series.astype(str).str.replace(r'\.0$', '', regex=True).str.strip()
 
+# --- BOOKING FUNCTION ---
 def insert_booking(date, time_range, manager, spoc, booked_by):
     if not booked_by:
         st.error('Slot booking failed. You must provide your name in the "Slot Booked By" field.')
@@ -107,7 +107,6 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
         st.error('If Error Message Reflects Or To Book Slot On Holidays & Other Than Official Hours Please Contact To Pritam Basu & Kousik Dey.')
         return
 
-    # Use cached fetch instead of direct API call
     all_vals = fetch_sheet_values('slot_booking_new')
     headers = all_vals[0] if all_vals else []
     records = [dict(zip(headers, row)) for row in all_vals[1:]] if len(all_vals) > 1 else []
@@ -123,54 +122,65 @@ def insert_booking(date, time_range, manager, spoc, booked_by):
 
     next_id = len(all_vals)
     ws = get_worksheet('slot_booking_new')
-    ws.append_row([next_id, date, time_range, manager, spoc, booked_by])
     
-    # Clear cache so next screen load reflects the updated database instantly
-    st.cache_data.clear()
-    st.success('Slot booked successfully!')
-    st.rerun()
+    with st.spinner("Processing your booking..."):
+        ws.append_row([next_id, date, time_range, manager, spoc, booked_by])
+        st.cache_data.clear()  # Clear cache to reflect updates instantly
+        st.success('Slot booked successfully!')
+        st.rerun()
 
+# --- OPTIMIZED UPLOAD FUNCTION (Prevents Upload Crashes) ---
 def update_another_database(file):
-    df = pd.read_excel(file)
-    ids_df = load_validation_ids()
-    
-    if ids_df is None:
-        return
-
-    valid_ids = clean_id_series(ids_df['CMIS_ID']).unique()
-    df['CMIS ID'] = clean_id_series(df['CMIS ID'])
-    filtered_df = df[df['CMIS ID'].isin(valid_ids)]
-
-    if filtered_df.empty:
-        st.error("No valid records matched the validation IDs. Check if the IDs in your uploaded sheet match 'ids.xlsx'.")
-        return
-
-    # Use cached call to grab data footprint size safely
-    all_vals = fetch_sheet_values('plana')
-    existing_records_count = max(0, len(all_vals) - 1)
+    with st.spinner("Processing data matching against validation sheet..."):
+        df = pd.read_excel(file)
+        ids_df = load_validation_ids()
         
-    rows_to_insert = []
-    for index, row in filtered_df.iterrows():
-        existing_records_count += 1
-        rows_to_insert.append([
-            existing_records_count, 
-            str(row.get('CMIS ID', '')), 
-            str(row.get('Student Name', '')), 
-            str(row.get('CMIS PH No(10 Number)', '')),
-            str(row.get('Center Name', '')), 
-            str(row.get('Name Of Uploder', '')), 
-            str(row.get('Verification Type', '')), 
-            str(row.get('Mode Of Verification', '')), 
-            str(row.get('Verification Date', ''))
-        ])
+        if ids_df is None:
+            return
+
+        valid_ids = clean_id_series(ids_df['CMIS_ID']).unique()
+        df['CMIS ID'] = clean_id_series(df['CMIS ID'])
+        filtered_df = df[df['CMIS ID'].isin(valid_ids)]
+
+        if filtered_df.empty:
+            st.error("No valid records matched the validation IDs. Check if the IDs in your uploaded sheet match 'ids.xlsx'.")
+            return
+
+        ws = get_worksheet('plana')
         
-    ws = get_worksheet('plana')
-    ws.append_rows(rows_to_insert)
-    
-    # Clear cache to reset local state data
-    st.cache_data.clear()
-    st.success(f"{len(filtered_df)} valid records inserted successfully into Google Sheets.")
-    st.rerun()
+        # Performance optimization: Count rows using length of 1 column instead of downloading the entire grid matrix
+        try:
+            existing_records_count = len(ws.col_values(1)) - 1
+        except Exception:
+            existing_records_count = len(ws.get_all_values()) - 1
+            
+        if existing_records_count < 0:
+            existing_records_count = 0
+            
+        rows_to_insert = []
+        for index, row in filtered_df.iterrows():
+            existing_records_count += 1
+            rows_to_insert.append([
+                existing_records_count, 
+                str(row.get('CMIS ID', '')), 
+                str(row.get('Student Name', '')), 
+                str(row.get('CMIS PH No(10 Number)', '')),
+                str(row.get('Center Name', '')), 
+                str(row.get('Name Of Uploder', '')), 
+                str(row.get('Verification Type', '')), 
+                str(row.get('Mode Of Verification', '')), 
+                str(row.get('Verification Date', ''))
+            ])
+            
+    with st.spinner("Uploading records to Google Sheets..."):
+        try:
+            ws.append_rows(rows_to_insert, value_input_option='USER_ENTERED')
+            st.cache_data.clear()  # Purge cache
+            st.session_state['data_uploaded'] = True
+            st.success(f"{len(filtered_df)} valid records inserted successfully into Google Sheets.")
+            st.rerun()
+        except Exception as e:
+            st.error(f"Upload failed. Google network rejected payload size. Try breaking down your sheets into smaller chunks. Error: {e}")
 
 def download_another_database_data():
     all_vals = fetch_sheet_values('plana')
@@ -275,6 +285,7 @@ def download_sample_excel():
     href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="Sample_Excel.xlsx">Download Sample Excel</a>'
     st.markdown(href, unsafe_allow_html=True)
 
+# --- MAIN EXECUTIVE APPLICATION APPLICATION ---
 def main():
     st.title('Slot Booking Platform')
     
@@ -294,11 +305,10 @@ def main():
 
     file = st.file_uploader('Upload Excel', type=['xlsx', 'xls'])
     data_uploaded = st.session_state.get('data_uploaded', False)
+    
     if file is not None:
         if st.button('Update Data'):
             update_another_database(file)
-            st.session_state['data_uploaded'] = True
-            data_uploaded = True
 
     if not data_uploaded:
         st.warning('Please upload student data before booking a slot.')
@@ -314,7 +324,6 @@ def main():
         download_another_database_data()
 
     try:
-        # Optimized with cache fetching function
         all_vals = fetch_sheet_values('slot_booking_new')
         if len(all_vals) > 1:
             bookings = pd.DataFrame(all_vals[1:], columns=all_vals[0])
